@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - es-translation
     paths:
       - '**.md'
       - '.github/workflows/markdown-ci.yml'

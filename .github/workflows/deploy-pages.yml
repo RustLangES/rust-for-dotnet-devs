@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - es-translation
 
 jobs:
   build:
@@ -26,10 +27,14 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
+        name: book
         path: ./book
 
   # Deployment job
   deploy:
+    permissions:
+      id-token: write
+      pages: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -39,4 +44,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+        with:
+          artifact_name: book
+
 
