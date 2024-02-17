@@ -40,11 +40,7 @@ Notas:
    representarlo. `ValueTuple` se puede usar en C#, pero es muy poco común. A 
    diferencia de C#, [F# sí tiene un tipo unit][unit.fs] similar a Rust.
 
-3. While `void` and `object` are not scalar types (even though scalars like `int`
-   are sub-classes of `object` in the .NET type hierarchy), they have been
-   included in the above table for convenience.
-
-4. Mientras `void` y `object` no son tipos escalares (aunque tipos escalares 
+3. Mientras `void` y `object` no son tipos escalares (aunque tipos escalares 
    como `int` son subclases de `object` en la jerarquía de tipos de .NET), se 
    han incluido en la tabla anterior por conveniencia.
 
