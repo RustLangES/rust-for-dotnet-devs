@@ -1,15 +1,22 @@
 [book]
 language = "en"
-multilingual = false
+languages = ["en", "es"]
+multilingual = true
 src = "src"
-title = "Rust for C#/.NET Developers"
+title = "Rust para C#/.NET Developers"
+
+[language.en]
+name = "English"
+
+[language.es]
+name = "Spanish"
 
 [output.html]
 additional-css = ["ferris.css"]
 additional-js = ["ferris.js"]
-git-repository-url = "https://github.com/microsoft/rust-for-dotnet-devs"
+git-repository-url = "https://github.com/RustLangES/rust-para-dotnet-devs"
 git-repository-icon = "fa-github"
-edit-url-template = "https://github.com/microsoft/rust-for-dotnet-devs/edit/main/{path}"
+# edit-url-template = "https://github.com/RustLangES/rust-para-dotnet-devs/edit/main/{path}"
 
 [output.html.playground]
 runnable = false
