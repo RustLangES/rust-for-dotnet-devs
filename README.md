@@ -1,17 +1,18 @@
-# Rust for C#/.NET Developers
+# Rust para C#/.NET Developers
+
+This is a fork of the [original book] with the unique purpose of translating it 
+into Spanish.
+
+We are a tiny community of Spanish-speaker Rust developers.
+We can join us to discuss this book or talk in [our discord]. 
 
 The document sources can be found in the `src` directory. It is structured for
-rendering with [mdBook].
-
-[Install mdBook] locally or start-up [`devcontainer.json`]. If you've never
-used Dev Containers, check out [Developing inside a Container using Visual
-Studio Code Remote Development][vscode-dc].
+rendering with a [mdBook fork] which helps us to translate the book without losing the original text.
 
 Then to render for reading in a Web browser, run:
 
-    mdbook serve
+    mdbook serve --language <language>
 
-  [mdBook]: https://rust-lang.github.io/mdBook/
-  [Install mdBook]: https://rust-lang.github.io/mdBook/guide/installation.html
-  [`devcontainer.json`]: .devcontainer/devcontainer.json
-  [vscode-dc]: https://code.visualstudio.com/docs/devcontainers/containers
+  [mdBook fork]: https://github.com/RustLangES/mdBook/
+  [original book]: https://github.com/microsoft/rust-for-dotnet-devs
+  [our discord]: https://discord.gg/4ng5HgmaMg
