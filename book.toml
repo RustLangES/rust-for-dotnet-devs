@@ -1,5 +1,5 @@
 [book]
-language = "en"
+language = "es"
 languages = ["en", "es"]
 multilingual = true
 src = "src"
