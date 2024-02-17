@@ -6,7 +6,7 @@
 
 - [Empezando](./getting-started/index.md)
 - [Lenguaje](./language/index.md)
-  - [Scalar Types](./language/scalar-types.md)
+  - [Tipos Escalares](./language/scalar-types.md)
   - [Strings](./language/strings.md)
   - [Structured Types](./language/structured-types.md)
   - [Custom Types](./language/custom-types/index.md)
