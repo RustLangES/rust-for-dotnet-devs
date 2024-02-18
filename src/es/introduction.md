@@ -1,13 +1,14 @@
 # Introducción
 
 Esta es una guía (no exhaustiva) para desarrolladores de C# y .NET que son 
-completamente nuevos en el lenguaje de programación Rust. Algunos conceptos y construcciones se traducen bastante bien entre C#/.NET y Rust, pero pueden 
+completamente nuevos en el lenguaje de programación Rust. Algunos conceptos y 
+construcciones se traducen bastante bien entre C#/.NET y Rust, pero pueden 
 expresarse de manera diferente, mientras que otros son un cambio radical, 
 como la gestión de la memoria. Esta guía ofrece una breve comparación y mapeo 
 de esas construcciones y conceptos con ejemplos concisos.
 
-Los autores[^authors] originales de esta guía eran desarrolladores C#/.Net que eran
-completamente nuevos en Rust. Esta guía es la compilación de conocimiento 
+Los autores[^authors] originales de esta guía eran desarrolladores C#/.Net que 
+eran completamente nuevos en Rust. Esta guía es la compilación de conocimiento 
 adquirido por los autores escribiendo código Rust durante varios meses. Es la 
 guía que los autores desearían haber tenido cuando comenzaron su viaje en Rust.
 Dicho esto, los autores te animarían a leer libros y otro material disponible 
