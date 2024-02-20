@@ -1,6 +1,6 @@
-# Structured Types
+# Tipos Estructurados
 
-Commonly used object and collection types in .NET and their mapping to Rust
+Tipos de objetos y colecciones comúnmente utilizados en .NET y su mapeo a Rust
 
 | C#           | Rust      |
 | ------------ | --------- |
@@ -11,7 +11,7 @@ Commonly used object and collection types in .NET and their mapping to Rust
 
 ## Array
 
-Fixed arrays are supported the same way in Rust as in .NET
+Los arrays fijos son compatibles de la misma manera en Rust que en .NET.
 
 C#:
 
@@ -25,10 +25,10 @@ Rust:
 let someArray: [i32; 2] = [1,2];
 ```
 
-## List
+## Listas
 
-In Rust the equivalent of a `List<T>` is a `Vec<T>`. Arrays can be converted
-to Vecs and vice versa.
+En Rust, el equivalente de un `List<T>` es un `Vec<T>`. Los arrays pueden 
+convertirse a Vecs y viceversa.
 
 C#:
 
@@ -53,7 +53,7 @@ let mut something = vec![
 something.push("c".to_owned());
 ```
 
-## Tuples
+## Tuplas
 
 C#:
 
@@ -68,18 +68,19 @@ Rust:
 let something = (1, 2);
 println!("a = {} b = {}", something.0, something.1);
 
-// deconstruction supported
+// soporta deconstrucción
 let (a, b) = something;
 println!("a = {} b = {}", a, b);
 ```
 
-> **NOTE**: Rust tuple elements cannot be named like in C#. The only way to
-> access a tuple element is by using the index of the element or deconstructing
-> the tuple.
+> **NOTA**: En Rust, los elementos de las tuplas no pueden tener nombres como 
+> en C#. La única forma de acceder a un elemento de la tupla es utilizando el 
+> índice del elemento o desestructurando la tupla.
 
-## Dictionary
+## Diccionarios
 
-In Rust the equivalent of a `Dictionary<TKey, TValue>` is a `Hashmap<K, V>`.
+En Rust el equivalente de un `Dictionary<TKey, TValue>` es un `Hashmap<K, V>`.
+
 
 C#:
 
@@ -104,6 +105,6 @@ let mut something = HashMap::from([
 something.insert("hi".to_owned(), "there".to_owned());
 ```
 
-See also:
+Mirar también:
 
-- [Rust's standard library - Collections](https://doc.rust-lang.org/std/collections/index.html)
+- [Biblioteca estándar de Rust - Colecciones](https://doc.rust-lang.org/std/collections/index.html)

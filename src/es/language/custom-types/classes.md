@@ -1,5 +1,5 @@
 # Classes
 
-Rust doesn't have classes. It only has [structures or `struct`][structs].
+Rust no tiene clases. Solo tiene [estructuras o `struct`][structs].
 
   [structs]: structs.md

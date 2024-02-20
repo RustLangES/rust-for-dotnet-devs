@@ -1,11 +1,11 @@
-# Custom Types
+# Tipos Personalizados
 
-The following sections discuss various topics and constructs related to
-developing custom types:
+Las siguientes secciones discuten varios temas y constructos relacionados con 
+el desarrollo de tipos personalizados:
 
 - [Classes](classes.md)
 - [Records](records.md)
-- [Structures](structs.md)
+- [Estructuras](structs.md)
 - [Interfaces](interfaces.md)
-- [Enumeration Types](enums.md)
+- [Tipos Enumeración](enums.md)
 - [Members](members.md)

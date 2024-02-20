@@ -1,28 +1,36 @@
-# Structures (`struct`)
+# Estructuras (`struct`)
 
-Structures in Rust and C# share a few similarities:
+Las estructuras en Rust y C# comparten algunas similitudes:
 
-- They are defined with the `struct` keyword, but in Rust, `struct` simply
-  defines the data/fields. The behavioural aspects in terms of functions and
-  methods, are defined separately in an _implementation block_ (`impl`).
+- Se definen con la palabra clave `struct`, pero en Rust, `struct` simplemente 
+  define los datos/campos. Los aspectos de comportamiento en términos de 
+  funciones y métodos se definen por separado en un 
+  _bloque de implementación_ (`impl`).
 
-- They can implement multiple traits in Rust just as they can implement
-  multiple interfaces in C#.
+- Pueden implementar múltiples traits en Rust de la misma manera que pueden 
+  implementar múltiples interfaces en C#.
 
-- They cannot be sub-classed.
+- No pueden ser subclasificadas.
 
-- They are allocated on stack by default, unless:
-  - In .NET, boxed or cast to an interface.
-  - In Rust, wrapped in a smart pointer like `Box`, `Rc`/`Arc`.
+- Se asignan en la pila (stack) por defecto, a menos que:
+  - En .NET, se haga [boxing] o se castee a una interfaz.
+  - En Rust, se envuelvan en un puntero inteligente como `Box`, `Rc`/`Arc`.
 
-In C#, a `struct` is a way to model a _value type_ in .NET, which is typically
-some domain-specific primitive or compound with value equality semantics. In
-Rust, a `struct` is the primary construct for modeling any data structure (the
-other being an `enum`).
+  [boxing]: https://learn.microsoft.com/es-es/dotnet/csharp/programming-guide/types/boxing-and-unboxing
 
-A `struct` (or `record struct`) in C# has copy-by-value and value equality
-semantics by default, but in Rust, this requires just one more step using [the
-`#derive` attribute][derive] and listing the traits to be implemented:
+En C#, un `struct` es una forma de modelar un _[value type]_ ([tipos de valor])
+en .NET, que suele ser algún primitivo específico del dominio o compuesto con 
+[semántica de igualdad] de valores. En Rust, un `struct` es la construcción 
+principal para modelar cualquier estructura de datos (la otra siendo un `enum`).
+
+  [value type]: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types
+  [tipos de valor]: https://learn.microsoft.com/es-es/dotnet/csharp/language-reference/builtin-types/value-types
+  [semántica de igualdad]: https://learn.microsoft.com/es-es/dotnet/csharp/programming-guide/statements-expressions-operators/how-to-define-value-equality-for-a-type
+
+Un `struct` (o `record struct`) en C# tiene copia por valor y semántica de 
+igualdad de valores por defecto, pero en Rust, esto requiere simplemente un paso
+más utilizando [el atributo `#derive`][derive] y enumerando los traits que se 
+deben implementar:
 
   [derive]: https://doc.rust-lang.org/stable/reference/attributes/derive.html
 
@@ -34,19 +42,19 @@ struct Point {
 }
 ```
 
-Value types in C#/.NET are usually designed by a developer to be immutable.
-It's considered best practice speaking semantically, but the language does not
-prevent designing a `struct` that makes destructive or in-place modifications.
-In Rust, it's the same. A type has to be consciously developed to be
-immutable.
+En C#/.NET, los Value Types suelen ser diseñados por un desarrollador para ser
+inmutables. Se considera una práctica recomendada desde el punto de vista 
+semántico, pero el lenguaje no impide diseñar un `struct` que realice 
+modificaciones destructivas o en el lugar. En Rust, es lo mismo. Un tipo debe 
+ser conscientemente desarrollado para ser inmutable.
 
-Since Rust doesn't have classes and consequently type hierarchies based on
-sub-classing, shared behaviour is achieved via traits and generics and
-polymorphism via virtual dispatch using [trait objects].
+Dado que Rust no tiene clases y, en consecuencia, jerarquías de tipos basadas en
+la subclase, el comportamiento compartido se logra mediante traits y genéricos, 
+y el polimorfismo a través de la despacho virtual utilizando [trait objects].
 
-  [trait objects]: https://doc.rust-lang.org/book/ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types
+  [trait objects]: https://rustlanges.github.io/rust-book-es/ch17-02-trait-objects.html
 
-Consider following `struct` representing a rectangle in C#:
+Considera la siguiente `struct` que representa un rectángulo en C#:
 
 ```c#
 struct Rectangle
@@ -72,7 +80,7 @@ struct Rectangle
 }
 ```
 
-The equivalent in Rust would be:
+El equivalente en Rust sería:
 
 ```rust
 #![allow(dead_code)]
@@ -126,12 +134,13 @@ impl Display for Rectangle {
 }
 ```
 
-Note that a `struct` in C# inherits the `ToString` method from `object` and
-therefore it _overrides_ the base implementation to provide a custom string
-representation. Since there is no inheritance in Rust, the way a type
-advertises support for some _formatted_ representation is by implementing the
-`Display` trait. This then enables for an instance of the structure to
-participate in formatting, such as shown in the call to `println!` below:
+Ten en cuenta que un `struct` en C# hereda el método `ToString` de `object` y, 
+por lo tanto, _anula_ la implementación base para proporcionar una 
+representación de cadena personalizada. Dado que no hay herencia en Rust, la 
+forma en que un tipo indica el soporte para alguna representación _formateada_ 
+es mediante la implementación del trait `Display`. Esto permite que una 
+instancia de la estructura participe en el formateo, como se muestra en la 
+llamada a `println!` a continuación:
 
 ```rust
 fn main() {

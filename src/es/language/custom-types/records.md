@@ -1,4 +1,4 @@
 # Records
 
-Rust doesn't have any construct for authoring records, neither like `record
-struct` nor `record class` in C#.
+Rust no tiene ningún estructura para crear records, ya sea como `record struct` 
+o `record class` en C#.

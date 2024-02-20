@@ -1,6 +1,7 @@
-# Enumeration types (`enum`)
+# Tipos Enumeración (`enum`)
 
-In C#, an `enum` is a value type that maps symbolic names to integral values:
+En C#, un `enum` es un tipo de valor que asigna nombres simbólicos a valores 
+enteros:
 
 ```c#
 enum DayOfWeek
@@ -15,7 +16,7 @@ enum DayOfWeek
 }
 ```
 
-Rust has practically _identical_ syntax for doing the same:
+Rust tiene una sintaxis prácticamente _idéntica_ para hacer lo mismo:
 
 ```rust
 enum DayOfWeek
@@ -30,18 +31,19 @@ enum DayOfWeek
 }
 ```
 
-Unlike in .NET, an instance of an `enum` type in Rust does not have any
-pre-defined behaviour that's inherited. It cannot even participate in equality
-checks as simple as `dow == DayOfWeek::Friday`. To bring it somewhat on par in
-function with an `enum` in C#, use [the `#derive` attribute][derive] to
-automatically have macros implement the commonly needed functionality:
+A diferencia de en .NET, una instancia de un tipo `enum` en Rust no tiene ningún
+comportamiento predefinido que se herede. Ni siquiera puede participar en 
+comprobaciones de igualdad tan simples como `dow == DayOfWeek::Friday`. Para 
+hacerlo en cierta medida comparable en función con un `enum` en C#, utiliza 
+[el atributo `#derive`][derive] para que los macros implementen automáticamente 
+la funcionalidad comúnmente necesaria:
 
 ```rust,does_not_compile
-#[derive(Debug,     // enables formatting in "{:?}"
-         Clone,     // required by Copy
-         Copy,      // enables copy-by-value semantics
-         Hash,      // enables hash-ability for use in map types
-         PartialEq  // enables value equality (==)
+#[derive(Debug,     // habilita el formateo en "{:?}"
+         Clone,     // requerido por Copy
+         Copy,      // habilita la semántica de copia por valor
+         Hash,      // habilita la posibilidad de usar en tipos de mapa
+         PartialEq  // habilita la igualdad de valores (==)
 )]
 enum DayOfWeek
 {
@@ -71,10 +73,11 @@ fn main() {
 }
 ```
 
-As the example above shows, an `enum` can be coerced to its assigned integral
-value, but the opposite is not possible as in C# (although that sometimes has
-the downside in C#/.NET that an `enum` instance can hold an unrepresented
-value). Instead, it's up to the developer to provide such a helper function:
+Como muestra el ejemplo anterior, un `enum` puede ser convertido a su valor 
+integral asignado, pero lo contrario no es posible como en C# (aunque esto a 
+veces tiene la desventaja en C#/.NET de que una instancia de `enum` puede 
+contener un valor no representado). En su lugar, depende del desarrollador 
+proporcionar una función auxiliar de este tipo:
 
 ```rust
 impl DayOfWeek {
@@ -94,9 +97,9 @@ impl DayOfWeek {
 }
 ```
 
-The `from_i32` function returns a `DayOfWeek` in a `Result` indicating success
-(`Ok`) if `n` is valid. Otherwise it returns `n` as-is in a `Result`
-indicating failure (`Err`):
+La función `from_i32` devuelve un `DayOfWeek` en un `Result` indicando éxito 
+(`Ok`) si `n` es válido. De lo contrario, devuelve `n` tal cual en un `Result` 
+que indica fallo (`Err`):
 
 ```rust
 let dow = DayOfWeek::from_i32(5);
@@ -106,12 +109,13 @@ let dow = DayOfWeek::from_i32(50);
 println!("{dow:?}"); // prints: Err(50)
 ```
 
-There exist crates in Rust that can help with implementing such mapping from
-integral types instead of having to code them manually.
+Existen crates en Rust que pueden ayudar a implementar este mapeo a partir de 
+tipos integrales en lugar de tener que codificarlos manualmente.
 
-An `enum` type in Rust can also serve as a way to design (discriminated) union
-types, which allow different _variants_ to hold data specific to each variant.
-For example:
+Un tipo `enum` en Rust también puede servir como una forma de diseñar tipos de 
+unión (discriminados), que permiten que diferentes _variantes_ contengan datos 
+específicos para cada variante. 
+Por ejemplo:
 
 ```rust
 enum IpAddr {
@@ -123,8 +127,8 @@ let home = IpAddr::V4(127, 0, 0, 1);
 let loopback = IpAddr::V6(String::from("::1"));
 ```
 
-This form of `enum` declaration does not exist in C#, but it can be emulated
-with (class) records:
+Esta forma de declaración de `enum` no existe en C#, pero se puede emular con
+registros (class records):
 
 ```c#
 var home = new IpAddr.V4(127, 0, 0, 1);
@@ -137,14 +141,15 @@ abstract record IpAddr
 }
 ```
 
-The difference between the two is that the Rust definition produces a _closed
-type_ over the variants. In other words, the compiler knows that there will be
-no other variants of `IpAddr` except `IpAddr::V4` and `IpAddr::V6`, and it can
-use that knowledge to make stricter checks. For example, in a `match`
-expression that's akin to C#'s `switch` expression, the Rust compiler will
-fail code unless all variants are covered. In contrast, the emulation with C#
-actually creates a class hierarchy (albeit very succinctly expressed) and
-since `IpAddr` is an _abstract base class_, the set of all types it can
-represent is unknown to the compiler.
+La diferencia entre ambas es que la definición en Rust produce un 
+_tipo cerrado_ sobre las variantes. En otras palabras, el compilador sabe que 
+no habrá otras variantes de `IpAddr` excepto `IpAddr::V4` y `IpAddr::V6`, y 
+puede utilizar ese conocimiento para realizar verificaciones más estrictas. 
+Por ejemplo, en una expresión `match` que es similar a la expresión `switch` en 
+C#, el compilador de Rust generará un error a menos que se cubran todas las 
+variantes. En cambio, la emulación con C# crea realmente una jerarquía de 
+clases (aunque expresada de manera muy concisa) y, dado que `IpAddr` es una 
+_clase base abstracta_, el conjunto de todos los tipos que puede representar es 
+desconocido para el compilador.
 
   [derive]: https://doc.rust-lang.org/stable/reference/attributes/derive.html
