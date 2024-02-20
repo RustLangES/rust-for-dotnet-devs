@@ -1,36 +1,42 @@
 # Strings
 
-There are two string types in Rust: `String` and `&str`. The former is
-allocated on the heap and the latter is a slice of a `String` or a `&str`.
+Existen dos tipos de strings en Rust: `String` and `&str`. El primero es
+alocado en el monticulo (heap) y el ultimo es un slice de `String` o un `&str`.
 
-The mapping of those to .NET is shown in the following table:
+> Nota: Slice significa rebana, parte, etc. quiere decir que es una porción de
+> un texto.
 
-| Rust               | .NET                 | Note        |
-| ------------------ | -------------------- | ----------- |
-| `&mut str`         | `Span<char>`         |             |
-| `&str`             | `ReadOnlySpan<char>` |             |
-| `Box<str>`         | `String`             | see Note 1. |
-| `String`           | `String`             |             |
-| `String` (mutable) | `StringBuilder`      | see Note 1. |
+La comparación de estos a .NET es mostrada en la siguiente tabla:
 
-There are differences in working with strings in Rust and .NET, but the
-equivalents above should be a good starting point. One of the differences is
-that Rust strings are UTF-8 encoded, but .NET strings are UTF-16 encoded.
-Further .NET strings are immutable, but Rust strings can be mutable when declared
-as such, for example `let s = &mut String::from("hello");`.
+| Rust               | .NET                 | Nota          |
+| ------------------ | -------------------- | --------------|
+| `&mut str`         | `Span<char>`         |               |
+| `&str`             | `ReadOnlySpan<char>` |               |
+| `Box<str>`         | `String`             | mirar Nota 1. |
+| `String`           | `String`             |               |
+| `String` (mutable) | `StringBuilder`      | mirar Nota 1. |
 
-There are also differences in using strings due to the concept of ownership. To
-read more about ownership with the String Type, see the [Rust Book][ownership-string-type-example].
+Hay diferencias en trabajar con strings en Rust y .Net, pero los equivalentes de
+arriba deberian de ser un buen punto de inicio. Una de las diferencias es que 
+los strings de Rust son codificados en UTF-8, pero los strings de .NET son 
+codificados en UTF-16.
+Además los strings de .Net son inmutables, pero los strings en Rust pueden ser
+mutables cuando se los declara como tal. por ejemplo 
+`let s = &mut String::from("hello");`
 
-[ownership-string-type-example]: https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#the-string-type
+Hay también diferencias en usar strings debido al concepto del ownership. Para
+leer más acerca del ownership con el tipo String, mira [el libro de Rust][ownership-string-type-example].
 
-Notes:
+[ownership-string-type-example]: https://rustlanges.github.io/rust-book-es/ch04-01-what-is-ownership.html#el-tipo-string
 
-1. The `Box<str>` type in Rust is equivalent to the `String` type in .NET. The
-   difference between the `Box<str>` and `String` types in Rust is that the
-   former stores pointer and size while the latter stores pointer, size, and
-   capacity, allowing `String` to grow in size. This is similar to the
-   `StringBuilder` type in .NET once the Rust `String` is declared mutable.
+Notas
+
+1. El tipo `Box<str>` en Rust es equivalente a el tipo `String` en .NET. La
+    diferencia entre los tipos `Box<str>` y `String` en Rust es que el primero 
+    almacena el puntero y el tamaño mientras que el segundo almacena puntero, 
+    tamaño y capacidad, permitiendo al `String` crecer en tamaño. Este es 
+    similar al el tipo `StringBuilder` de .NET cuando el String de Rust es 
+    declarado como mutable.
 
 C#:
 
@@ -48,11 +54,12 @@ let str = Box::new("Hello World!");
 let mut sb = String::from("Hello World!");
 ```
 
-## String Literals
+## String Literales
 
-String literals in .NET are immutable `String` types and allocated on the heap.
-In Rust, they are `&'static str`, which is immutable and has a global lifetime
-and does not get allocated on the heap; they're embedded in the compiled binary.
+Las literales de cadena en .NET son tipos `String` inmutables y alocados en el 
+heap (montículo). En Rust, son `&'static str`, que es inmutable, tiene un 
+tiempo de vida global y no se asigna en el montículo; están integradas en el 
+binario compilado.
 
 C#
 
@@ -66,7 +73,10 @@ Rust
 let str: &'static str = "Hello, World!";
 ```
 
-C# verbatim string literals are equivalent to Rust raw string literals.
+En C# los strings literales de [verbatim] son equivalentes a los string 
+literales sin procesar en Rust.
+
+[verbatim]: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/verbatim
 
 C#
 
@@ -80,7 +90,8 @@ Rust
 let str = r#"Hello, \World/!"#;
 ```
 
-C# UTF-8 string literals are equivalent to Rust byte string literals.
+En C# los string literales UTF-8 en C# son equivalentes a las string literales 
+de bytes en Rust.
 
 C#
 
@@ -94,11 +105,11 @@ Rust
 let str = b"hello";
 ```
 
-## String Interpolation
+## Interpolación de Strings
 
-C# has a built-in string interpolation feature that allows you to embed
-expressions inside a string literal. The following example shows how to use
-string interpolation in C#:
+C# tiene una característica incorporada de interpolación de cadenas que te 
+permite incrustar expresiones dentro de una cadena literal. El siguiente 
+ejemplo muestra cómo usar la interpolación de cadenas en C#:
 
 ```csharp
 string name = "John";
@@ -106,9 +117,9 @@ int age = 42;
 string str = $"Person {{ Name: {name}, Age: {age} }}";
 ```
 
-Rust does not have a built-in string interpolation feature. Instead, the
-`format!` macro is used to format a string. The following example shows how to
-use string interpolation in Rust:
+Rust no tiene una característica incorporada de interpolación de cadenas. En su 
+lugar, se utiliza la macro `format!` para formatear una cadena. El siguiente 
+ejemplo muestra cómo usar la interpolación de cadenas en Rust:
 
 ```rust
 let name = "John";
@@ -116,8 +127,9 @@ let age = 42;
 let str = format!("Person {{ name: {name}, age: {age} }}");
 ```
 
-Custom classes and structs can also be interpolated in C# due to the fact that
-the `ToString()` method is available for each type as it inherits from `object`.
+Las clases y structs personalizados también se pueden interpolar en C# debido a 
+que el método `ToString()` está disponible para cada tipo al heredar de 
+`object`.
 
 ```csharp
 class Person
@@ -133,9 +145,9 @@ var person = new Person { Name = "John", Age = 42 };
 Console.Writeline(person);
 ```
 
-In Rust, there is no default formatting implemented/inherited for each type.
-Instead, the `std::fmt::Display` trait must be implemented for each type that
-needs to be converted to a string.
+En Rust, no hay un formato predeterminado implementado o heredado para cada 
+tipo. En su lugar, se debe implementar el trait `std::fmt::Display` para cada 
+tipo que necesite ser convertido a una cadena.
 
 ```rust
 use std::fmt::*;
@@ -159,12 +171,12 @@ let person = Person {
 println!("{person}");
 ```
 
-Another option is to use the `std::fmt::Debug` trait. The `Debug` trait is
-implemented for all standard types and can be used to print the internal
-representation of a type. The following example shows how to use the `derive`
-attribute to print the internal representation of a custom struct using the
-`Debug` macro. This declaration is used to automatically implement the `Debug`
-trait for the `Person` struct:
+Otra opción es utilizar el trait `std::fmt::Debug`. El trait `Debug` está 
+implementado para todos los tipos estándar y se puede usar para imprimir la 
+representación interna de un tipo. El siguiente ejemplo muestra cómo utilizar 
+el atributo `derive` para imprimir la representación interna de una estructura 
+personalizada utilizando la macro `Debug`. Esta declaración se utiliza para 
+implementar automáticamente el trait `Debug` para la estructura `Person`:
 
 ```rust
 #[derive(Debug)]
@@ -181,9 +193,9 @@ let person = Person {
 println!("{person:?}");
 ```
 
-> Note: Using the :? format specifier will use the `Debug` trait to print the
-> struct, where leaving it out will use the `Display` trait.
+> Nota: El uso del especificador de formato `:?` utilizará el trait `Debug` para 
+> imprimir la estructura, mientras que omitirlo utilizará el trait `Display`.
 
-See also:
+Mira también:
 
 - [Rust by Example - Debug](https://doc.rust-lang.org/stable/rust-by-example/hello/print/print_debug.html?highlight=derive#debug)
