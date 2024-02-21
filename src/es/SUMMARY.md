@@ -16,7 +16,7 @@
     - [Interfaces](./language/custom-types/interfaces.md)
     - [Tipos Enumeración](./language/custom-types/enums.md)
     - [Members](./language/custom-types/members.md)
-  - [Local Functions](./language/local-functions.md)
+  - [Funciones Locales](./language/local-functions.md)
   - [Lambda and Closures](./language/lambda-and-closures.md)
   - [Variables](./language/variables.md)
   - [Namespaces](./language/namespaces.md)

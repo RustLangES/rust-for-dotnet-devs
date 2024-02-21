@@ -1,6 +1,12 @@
-# Local Functions
+# Funciones Locales
 
-C# and Rust offer local functions, but local functions in Rust are limited to
-the equivalent of static local functions in C#. In other words, local
-functions in Rust cannot use variables from their surrounding lexical scope;
-but _closures_ can.
+C# y Rust ofrecen funciones locales, pero las funciones locales en Rust están 
+limitadas al equivalente de funciones locales estáticas en C#. En otras 
+palabras, las funciones locales en Rust no pueden usar variables de su ámbito 
+léxico circundante; pero las _closures_ pueden.
+
+También puedes ver:
+
+- [Closures: Funciones anónimas que capturan su entorno - El Lenguaje de Programación Rust]
+
+    [Closures: Funciones anónimas que capturan su entorno - El Lenguaje de Programación Rust]: https://rustlanges.github.io/rust-book-es/ch13-01-closures.html?highlight=closure#closures-funciones-anónimas-que-capturan-su-entorno
