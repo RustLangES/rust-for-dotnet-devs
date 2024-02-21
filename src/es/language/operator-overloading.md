@@ -1,7 +1,7 @@
-# Operator overloading
+# Sobrecarga de operadores
 
-A custom type can overload an _overloadable operator_ in C#. Consider the
-following example in C#:
+Un tipo personalizado puede sobrecargar un _operador sobrecargable_ en C#. 
+Considera el siguiente ejemplo en C#:
 
 ```csharp
 Console.WriteLine(new Fraction(5, 4) + new Fraction(1, 2));  // 14/8
@@ -15,9 +15,10 @@ public readonly record struct Fraction(int Numerator, int Denominator)
 }
 ```
 
-In Rust, many operators [can be overloaded via traits][ops.rs]. This is possible
-because operators are syntactic sugar for method calls. For example, the `+`
-operator in `a + b` calls the `add` method (see [operator overloading]):
+En Rust, muchos operadores [pueden sobrecargarse mediante traits][ops.rs]. Esto 
+es posible porque los operadores son azúcar sintáctica para llamadas a métodos. 
+Por ejemplo, el operador `+` en `a + b` llama al método `add` (ver 
+[sobrecarga de operadores]):
 
 ```rust
 use std::{fmt::{Display, Formatter, Result}, ops::Add};
@@ -54,4 +55,4 @@ fn main() {
 ```
 
 [ops.rs]: https://doc.rust-lang.org/core/ops/
-[operator overloading]: https://doc.rust-lang.org/rust-by-example/trait/ops.html
+[sobrecarga de operadores]: https://doc.rust-lang.org/rust-by-example/trait/ops.html

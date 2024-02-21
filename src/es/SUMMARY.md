@@ -28,7 +28,7 @@
   - [Nullability and Optionality](./language/nullability-and-optionality.md)
   - [Descartes](./language/discards.md)
   - [Conversion and Casting](./language/conversion-and-casting.md)
-  - [Operator Overloading](./language/operator-overloading.md)
+  - [Sobrecarga de operadores](./language/operator-overloading.md)
   - [Documentation Comments](./language/documentation-comments.md)
 - [Memory Management](./memory-management/index.md)
 - [Resource Management](./resource-management/index.md)
