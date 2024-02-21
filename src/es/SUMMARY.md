@@ -22,7 +22,7 @@
   - [Namespaces](./language/namespaces.md)
   - [Equality](./language/equality.md)
   - [Generics](./language/generics.md)
-  - [Polymorphism](./language/polymorphism.md)
+  - [Polimorfismo](./language/polymorphism.md)
   - [Herencia](./language/inheritance.md)
   - [Exception Handling](./language/exception-handling.md)
   - [Nullability and Optionality](./language/nullability-and-optionality.md)

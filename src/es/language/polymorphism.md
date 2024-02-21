@@ -1,17 +1,17 @@
-# Polymorphism
+# Polimorfismo
 
-Rust does not support classes and sub-classing therefore polymorphism can't be
-achieved in an identical manner to C#.
+Rust no admite clases y herencia, por lo tanto, el polimorfismo no se puede 
+lograr de manera idéntica a C#.
 
-See also:
+Consulta también:
 
-- Virtual dispatch using _trait objects_, as explained in the [Structures]
-  section
-- [Generics]
-- [Inheritance]
-- [Operator overloading]
+- Despacho virtual utilizando _objetos de trait_, como se explica en la sección 
+[Estructuras]
+- [Genéricos]
+- [Herencia]
+- [Sobrecarga de operadores]
 
-[structures]: ./custom-types/structs.md
-[generics]: ./generics.md
-[inheritance]: ./inheritance.md
-[operator overloading]: ./operator-overloading.md
+[Estructuras]: ./custom-types/structs.md
+[Genéricos]: ./generics.md
+[Herencia]: ./inheritance.md
+[Sobrecarga de operadores]: ./operator-overloading.md
