@@ -1,15 +1,16 @@
 # Namespaces
 
-Namespaces are used in .NET to organize types, as well as for controlling the
-scope of types and methods in projects.
+En .NET, se utilizan namespaces para organizar tipos, así como para controlar 
+el ámbito de los tipos y métodos en proyectos.
 
-In Rust, namespace refers to a different concept. The equivalent of a namespace
-in Rust is a [module][rust-module]. For both C# and Rust, visibility of items
-can be restricted using access modifiers, respectively visibility modifiers. In
-Rust, the default visibility is _private_ (with only few exceptions). The
-equivalent of C#'s `public` is `pub` in Rust, and `internal` corresponds to
-`pub(crate)`. For more fine-grained access control, refer to the [visibility
-modifiers] reference.
+En Rust, el término "namespace" se refiere a un concepto diferente. El 
+equivalente de un namespace en Rust es un [módulo][rust-module]. Tanto en C# 
+como en Rust, la visibilidad de los elementos se puede restringir mediante 
+modificadores de acceso o modificadores de visibilidad, respectivamente. 
+En Rust, la visibilidad predeterminada es _privada_ (con solo algunas 
+excepciones). El equivalente al `public` de C# es `pub` en Rust, y `internal` 
+se corresponde con `pub(crate)`. Para un control de acceso más detallado, 
+consulta la referencia de [modificadores de visibilidad].
 
 [rust-module]: https://doc.rust-lang.org/reference/items/modules.html
-[visibility modifiers]: https://doc.rust-lang.org/reference/visibility-and-privacy.html
+[modificadores de visibilidad]: https://doc.rust-lang.org/reference/visibility-and-privacy.html
