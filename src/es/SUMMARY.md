@@ -14,7 +14,7 @@
     - [Records](./language/custom-types/records.md)
     - [Structures](./language/custom-types/structs.md)
     - [Interfaces](./language/custom-types/interfaces.md)
-    - [Enumeration Types](./language/custom-types/enums.md)
+    - [Tipos Enumeración](./language/custom-types/enums.md)
     - [Members](./language/custom-types/members.md)
   - [Local Functions](./language/local-functions.md)
   - [Lambda and Closures](./language/lambda-and-closures.md)
