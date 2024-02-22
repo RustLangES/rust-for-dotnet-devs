@@ -17,7 +17,7 @@
     - [Tipos Enumeración](./language/custom-types/enums.md)
     - [Members](./language/custom-types/members.md)
   - [Funciones Locales](./language/local-functions.md)
-  - [Lambda and Closures](./language/lambda-and-closures.md)
+  - [Lambda y Closures](./language/lambda-and-closures.md)
   - [Variables](./language/variables.md)
   - [Namespaces](./language/namespaces.md)
   - [Equality](./language/equality.md)
