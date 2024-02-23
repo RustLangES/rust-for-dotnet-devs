@@ -1,12 +1,13 @@
-# Members
+# Miembros
 
-## Constructors
+## Constructores
 
-Rust does not have any notion of constructors. Instead, you just write factory
-functions that return an instance of the type. The factory functions can be
-stand-alone or _associated functions_ of the type. In C# terms, associated
-functions are like having static methods on a type. Conventionally, if there
-is just one factory function for a `struct`, it's named `new`:
+Rust no tiene ninguna noción de constructores. En su lugar, simplemente escribes
+funciones factory que retornan una instancia del tipo. Las funciones Factory 
+pueden ser independientes o _funciones asociadas_ al tipo. En términos de C# las
+funciones asociadas son como tener metodos estaticos en un tipo. 
+Por convención, si hay solo una función factory para una estructura, se le
+llama `new`:
 
 ```rust
 struct Rectangle {
@@ -21,34 +22,35 @@ impl Rectangle {
 }
 ```
 
-Since Rust functions (associated or otherwise) do not support overloading; the
-factory functions have to be named uniquely. For example, below are some
-examples of so-called constructors or factory functions available on `String`:
+Dado que las funciones en Rust (ya sean asociadas u otras) no admiten sobrecarga;
+las funciones factory tienen que tener nombres únicos. Por ejemplo, a 
+continuación se presentan algunos ejemplos de las funciones constructores o 
+factory disponibles en `String`.
 
-- `String::new`: creates an empty string.
-- `String::with_capacity`: creates a string with an initial buffer capacity.
-- `String::from_utf8`: creates a string from bytes of UTF-8 encoded text.
-- `String::from_utf16`: creates a string from bytes of UTF-16 encoded text.
+- `String::new`: crea un string vació.
+- `String::with_capacity`: crea un string con una capacidad de buffer inicial.
+- `String::from_utf8`: crea un string desde bytes de texto codificado en UTF-8.
+- `String::from_utf16`: crea un string desde bytes de texto codificado en UTF-16.
 
-In the case of an `enum` type in Rust, the variants act as the constructors.
-See [the section on enumeration types][enums] for more.
+En el caso de un tipo `enum` en Rust, las variantes actúan como constructores.
+Mira [la sección de tipos Enumerados][ennums] para ver más.
 
-See also:
+Mira también:
 
 - [Constructors are static, inherent methods (C-CTOR)][rs-api-C-CTOR]
 
   [enums]: enums.md
   [rs-api-C-CTOR]: https://rust-lang.github.io/api-guidelines/predictability.html?highlight=new#constructors-are-static-inherent-methods-c-ctor
 
-## Methods (static & instance-based)
+## Métodos (estáticos y basados en instancias)
 
-Like C#, Rust types (both `enum` and `struct`), can have static and
-instance-based methods. In Rust-speak, a _method_ is always instance-based and
-is identified by the fact that its first parameter is named `self`. The `self`
-parameter has no type annotation since it's always the type to which the
-method belongs. A static method is called an _associated function_. In the
-example below, `new` is an associated function and the rest (`length`, `width`
-and `area`) are methods of the type:
+Al igual que en C#, los tipos de Rust (tanto `enum` como `struct`) pueden tener
+métodos estáticos y basados en instancias. En la terminología de Rust, un método
+siempre es basado en instancia y se identifica por el hecho de que su primer 
+parametro se llama `self`. El parametro `self` no tiene una anotación de tipo,
+ya que siempre es el tipo al que pertenece el método. Un método estático se 
+llama función asociada. En el ejemplo de a continuación, `new` es una función 
+asociada y el resto (`length`, `width`, y `area`) son métodos de el tipo.
 
 ```rust
 struct Rectangle {
@@ -75,11 +77,11 @@ impl Rectangle {
 }
 ```
 
-## Constants
+## Constantes
 
-Like in C#, a type in Rust can have constants. However, the most interesting
-aspect to note is that Rust allows a type instance to be defined as a constant
-too:
+Al igual que en C#, un tipo en Rust puede tener constantes. Sin embargo, el 
+aspecto más interesante de notar es que Rust permite que una instancia de tipo
+se defina como una constante. 
 
 ```rust
 struct Point {
@@ -92,7 +94,7 @@ impl Point {
 }
 ```
 
-In C#, the same would require a static read-only field:
+En C#, lo mismo requeriría un campo de solo lectura estático.
 
 ```c#
 readonly record struct Point(int X, int Y)
@@ -101,25 +103,24 @@ readonly record struct Point(int X, int Y)
 }
 ```
 
-## Events
+## Eventos
 
-Rust has no built-in support for type members to adverstise and fire events,
-like C# has with the `event` keyword.
+Rust no tiene soporte incorporado para que los miembros de tipo anuncien y 
+disparen eventos, como lo tiene C# con la palabra clave `event`.
 
-## Properties
+## Propiedades
 
-In C#, fields of a type are generally private. They are then
-protected/encapsulated by property members with accessor methods (`get` and
-`set`) to read or write to those field. The accessor methods can contain extra
-logic, for example, to either validate the value when being set or compute a
-value when being read. Rust only has methods [where a getter is named after the
-field (in Rust method names can share the same identifier as a field) and the
-setter uses a `set_` prefix][get-set-name.rs].
+En C#, los campos de un tipo suelen ser privados. Luego, se protegen/encapsulan
+mediante miembros de propiedades miembro como métodos de acceso (get y set) para 
+leer o escribir, para validar el valor al establecerlo o calcular un valor al 
+leerlo. Rust solo tiene métodos [donde un getter tiene el mismo nombre que el 
+campo (En Rust, los nombres de los métodos pueden compartir el mismo 
+identificador que un campo) y el setter utiliza un prefijo `set_`][get-set-name.rs]
 
   [get-set-name.rs]: https://github.com/rust-lang/rfcs/blob/master/text/0344-conventions-galore.md#gettersetter-apis
 
-Below is an example showing how property-like accessor methods typically look
-for a type in Rust:
+A continuación, se muestra un ejemplo que muestra cómo suelen lucir los métodos
+de acceso similares a propiedades para un tipo en Rust:
 
 ```rust
 struct Rectangle {
@@ -132,21 +133,21 @@ impl Rectangle {
         Self { x1, y1, x2, y2 }
     }
 
-    // like property getters (each shares the same name as the field)
+    // como getters de propiedades (cada uno comparte el mismo nombre que el campo)
 
     pub fn x1(&self) -> i32 { self.x1 }
     pub fn y1(&self) -> i32 { self.y1 }
     pub fn x2(&self) -> i32 { self.x2 }
     pub fn y2(&self) -> i32 { self.y2 }
 
-    // like property setters
+    // como setters de propiedades
 
     pub fn set_x1(&mut self, val: i32) { self.x1 = val }
     pub fn set_y1(&mut self, val: i32) { self.y1 = val }
     pub fn set_x2(&mut self, val: i32) { self.x2 = val }
     pub fn set_y2(&mut self, val: i32) { self.y2 = val }
 
-    // like computed properties
+    // como propiedades calculadas
 
     pub fn length(&self) -> i32 {
         self.y2 - self.y1
@@ -162,12 +163,12 @@ impl Rectangle {
 }
 ```
 
-## Extension Methods
+## Métodos de Extensión
 
-Extension methods in C# enable the developer to attach new statically-bound
-methods to existing types, without needing to modify the original definition
-of the type. In the following C# example, a new `Wrap` method is added to the
-`StringBuilder` class _by extension_:
+Los métodos de extensión en C# permiten al desarrollador adjuntar nuevos métodos
+vinculados estáticamente a tipos existentes, sin necesidad de modificar la 
+definición original del tipo. En el siguiente ejemplo de C#, se añade un nuevo 
+método `Wrap` a la clase `StringBuilder` _mediante una extensión_:
 
 ```csharp
 using System;
@@ -176,7 +177,7 @@ using Extensions; // (1)
 
 var sb = new StringBuilder("Hello, World!");
 sb.Wrap(">>> ", " <<<"); // (2)
-Console.WriteLine(sb.ToString()); // Prints: >>> Hello, World! <<<
+Console.WriteLine(sb.ToString()); // Muestra: >>> Hello, World! <<<
 
 namespace Extensions
 {
@@ -189,11 +190,11 @@ namespace Extensions
 }
 ```
 
-Note that for an extension method to become available (2), the namespace with
-the type containing the extension method must be imported (1). Rust offers a
-very similar facility via traits, called _extension traits_. The following
-example in Rust is the equivalent of the C# example above; it extends `String`
-with the method `wrap`:
+Ten en cuenta que para que un método de extensión esté disponible (2), se debe 
+importar el namespace con el tipo que contiene el método de 
+extensión (1). Rust ofrece una facilidad muy similar a través de traits, 
+llamada _extension traits_. El siguiente ejemplo en Rust es equivalente al 
+ejemplo de C# anterior; extiende `String` con el método `wrap`:
 
 ```rust
 #![allow(dead_code)]
@@ -220,64 +221,68 @@ fn main() {
 }
 ```
 
-Just like in C#, for the method in the extension trait to become available
-(2), the extension trait must be imported (1). Also note, the extension trait
-identifier `StrWrapExt` can itself be discarded via `_` at the time of import
-without affecting the availability of `wrap` for `String`.
+Al igual que en C#, para que el método en el trait de extensión esté 
+disponible (2), el trait de extensión debe importarse (1). También ten en cuenta 
+que el identificador del trait de extensión `StrWrapExt` puede descartarse 
+mediante `_` en el momento de la importación sin afectar la disponibilidad de 
+`wrap` para `String`.
 
-## Visibility/Access modifiers
+## Modificadores de Visibilidad/Acceso
 
-C# has a number of accessibility or visibility modifiers:
+C# tiene varios modificadores de accesibilidad o visibilidad:
 
 - `private`
 - `protected`
 - `internal`
-- `protected internal` (family)
+- `protected internal` (familia)
 - `public`
 
-In Rust, a compilation is built-up of a tree of modules where modules contain
-and define [_items_][items] like types, traits, enums, constants and
-functions. Almost everything is private by default. One exception is, for
-example, _associated items_ in a public trait, which are public by default.
-This is similar to how members of a C# interface declared without any public
-modifiers in the source code are public by default. Rust only has the `pub`
-modifier to change the visibility with respect to the module tree. There
-are variations of `pub` that change the scope of the public visibility:
+En Rust, una compilación se compone de un árbol de módulos en el que los módulos
+contienen y definen [_elementos_][items] como tipos, traits, enums, constantes y
+funciones. Casi todo es privado por defecto. Una excepción es, por ejemplo, 
+_elementos asociados_ en un trait público, que son públicos por defecto. Esto es
+similar a cómo los miembros de una interfaz de C# declarados sin ningún 
+modificador público en el código fuente son públicos por defecto. Rust solo 
+tiene el modificador `pub` para cambiar la visibilidad con respecto al árbol de 
+módulos. Hay variaciones de `pub` que cambian el alcance de la visibilidad 
+pública:
 
 - `pub(self)`
 - `pub(super)`
 - `pub(crate)`
 - `pub(in PATH)`
 
-For more details, see the [Visibility and Privacy][privis] section of The Rust
-Reference.
+Para obtener más detalles, consulta la sección [Visibility and Privacy][privis] 
+en la referencia de Rust.
 
   [privis]: https://doc.rust-lang.org/reference/visibility-and-privacy.html
   [items]: https://doc.rust-lang.org/reference/items.html
 
-The table below is an approximation of the mapping of C# and Rust modifiers:
+La tabla a continuación es una aproximación de la correspondencia entre los 
+modificadores de C# y Rust:
 
-| C#                            | Rust         | Note        |
-| ----------------------------- | ------------ | ----------- |
-| `private`                     | (default)    | See note 1. |
-| `protected`                   | N/A          | See note 2. |
-| `internal`                    | `pub(crate)` |             |
-| `protected internal` (family) | N/A          | See note 2. |
-| `public`                      | `pub`        |             |
+| C#                            | Rust         | Note          |
+| ----------------------------- | ------------ | ------------- |
+| `private`                     | (default)    | Mirar nota 1. |
+| `protected`                   | N/A          | Mirar nota 2. |
+| `internal`                    | `pub(crate)` |               |
+| `protected internal` (familia)| N/A          | Mirar nota 2. |
+| `public`                      | `pub`        |               |
 
-1. There is no keyword to denote private visibility; it's the default in Rust.
+1. No existe una palabra clave para denotar visibilidad privada; es la 
+configuración predeterminada en Rust.
 
-2. Since there are no class-based type hierarchies in Rust, there is no
-   equivalent of `protected`.
+2. Dado que no hay jerarquías de tipos basadas en clases en Rust, no hay un 
+equivalente de `protected`.
 
-## Mutability
+## Mutabilidad
 
-When designing a type in C#, it is the responsiblity of the developer to
-decide whether the a type is mutable or immutable; whether it supports
-destructive or non-destructive mutations. C# does support an immutable design
-for types with a _positional record declaration_ (`record class` or `readonly
-record struct`). In Rust, mutability is expressed on methods through the type
-of the `self` parameter as shown in the example below:
+Al diseñar un tipo en C#, es responsabilidad del desarrollador decidir si un 
+tipo es mutable o inmutable; si admite mutaciones destructivas o no destructivas. 
+C# admite un diseño inmutable para tipos con una _positional record declaration_ 
+(`record class` o `readonly record struct`). 
+En Rust, la mutabilidad se expresa en los métodos a través del tipo del 
+parámetro `self`, como se muestra en el siguiente ejemplo:
 
 ```rust
 struct Point { x: i32, y: i32 }
@@ -287,30 +292,30 @@ impl Point {
         Self { x, y }
     }
 
-    // self is not mutable
+    // self no es mutable
 
     pub fn x(&self) -> i32 { self.x }
     pub fn y(&self) -> i32 { self.y }
 
-    // self is mutable
+    // self es mutable
 
     pub fn set_x(&mut self, val: i32) { self.x = val }
     pub fn set_y(&mut self, val: i32) { self.y = val }
 }
 ```
 
-In C#, you can do non-destructive mutations using `with`:
+En C#, puedes realizar mutaciones no destructivas usando `with`:
 
 ```c#
 var pt = new Point(123, 456);
 pt = pt with { X = 789 };
-Console.WriteLine(pt.ToString()); // prints: Point { X = 789, Y = 456 }
+Console.WriteLine(pt.ToString()); // Muestra: Point { X = 789, Y = 456 }
 
 readonly record struct Point(int X, int Y);
 ```
 
-There is no `with` in Rust, but to emulate something similar in Rust, it has
-to be baked into the type's design:
+No hay `with` en Rust, pero para emular algo similar en Rust, debe estar 
+integrado en el diseño del tipo:
 
 ```rust
 struct Point { x: i32, y: i32 }
@@ -323,7 +328,7 @@ impl Point {
     pub fn x(&self) -> i32 { self.x }
     pub fn y(&self) -> i32 { self.y }
 
-    // following methods consume self and return a new instance
+    // los siguientes métodos consumen self y devuelven una nueva instancia:
 
     pub fn set_x(self, val: i32) -> Self { Self::new(val, self.y) }
     pub fn set_y(self, val: i32) -> Self { Self::new(self.x, val) }

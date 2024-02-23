@@ -8,4 +8,4 @@ el desarrollo de tipos personalizados:
 - [Estructuras](structs.md)
 - [Interfaces](interfaces.md)
 - [Tipos Enumeración](enums.md)
-- [Members](members.md)
+- [Miembros](members.md)
