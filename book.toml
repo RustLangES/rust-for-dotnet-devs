@@ -12,11 +12,12 @@ name = "English"
 name = "Spanish"
 
 [output.html]
+site-url = "https://www.rustlang-es.org/rust-para-dotnet-devs"
 additional-css = ["ferris.css"]
 additional-js = ["ferris.js"]
 git-repository-url = "https://github.com/RustLangES/rust-para-dotnet-devs"
 git-repository-icon = "fa-github"
-# edit-url-template = "https://github.com/RustLangES/rust-para-dotnet-devs/edit/main/{path}"
+edit-url-template = "https://github.com/RustLangES/rust-para-dotnet-devs/edit/es-translation/{path}"
 
 [output.html.playground]
 runnable = false
