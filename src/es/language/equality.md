@@ -1,14 +1,8 @@
-# Equality
+# Equivalencia
 
-When comparing for equality in C#, this refers to testing for _equivalence_ in
-some cases (also known as _value equality_), and in other cases it refers to
-testing for _reference equality_, which tests whether two variables refer to the
-same underlying object in memory. Every custom type can be compared for equality
-because it inherits from `System.Object` (or `System.ValueType` for value types,
-which inherits from `System.Object`), using either one of the abovementioned
-semantics.
+Cuando se compara por igualdad en C#, esto se refiere a probar la _equivalencia_ en algunos casos (también conocida como _igualdad de valor_), y en otros casos se refiere a probar la _igualdad de referencia_, que verifica si dos variables se refieren al mismo objeto subyacente en memoria. Cada tipo personalizado puede ser comparado por igualdad porque hereda de `System.Object` (o `System.ValueType` para tipos de valor, que a su vez hereda de `System.Object`), utilizando cualquiera de las semánticas mencionadas anteriormente.
 
-For example, when comparing for equivalence and reference equality in C#:
+Por ejemplo, al comparar por equivalencia e igualdad de referencia en C#:
 
 ```csharp
 var a = new Point(1, 2);
@@ -23,14 +17,11 @@ Console.WriteLine(ReferenceEquals(a, c)); // (2) True
 record Point(int X, int Y);
 ```
 
-1. The equality operator `==` and the `Equals` method on the `record Point`
-   compare for value equality, since records support value-type equality by
-   default.
+1. El operador de igualdad `==` y el método `Equals` en el `record Point` comparan por igualdad de valor, ya que los registros admiten la igualdad de tipo valor de forma predeterminada.
 
-2. Comparing for reference equality tests whether the variables refer to the
-   same underlying object in memory.
+2. Comparar por igualdad de referencia verifica si las variables se refieren al mismo objeto subyacente en memoria.
 
-Equivalently in Rust:
+Equivalente en Rust:
 
 ```rust
 #[derive(Copy, Clone)]
@@ -46,14 +37,9 @@ fn main() {
 }
 ```
 
-The compiler error above illustrates that in Rust equality comparisons are
-_always_ related to a trait implementation. To support a comparison using `==`,
-a type must implement [`PartialEq`][partialeq.rs].
+El error del compilador anterior ilustra que en Rust las comparaciones de igualdad _siempre_ están relacionadas con una implementación de trait. Para admitir una comparación usando `==`, un tipo debe implementar [`PartialEq`][partialeq.rs].
 
-Fixing the example above means deriving `PartialEq` for `Point`. Per default,
-deriving `PartialEq` will compare all fields for equality, which therefore have
-to implement `PartialEq` themselves. This is comparable to the equality for
-records in C#.
+Corregir el ejemplo anterior significa derivar `PartialEq` para `Point`. Por defecto, al derivar `PartialEq` se compararán todos los campos para la igualdad, por lo que ellos mismos deben implementar `PartialEq`. Esto es comparable a la igualdad de registros en C#.
 
 ```rust
 #[derive(Copy, Clone, PartialEq)]
@@ -70,9 +56,9 @@ fn main() {
 }
 ```
 
-See also:
+Véase también:
 
-- [`Eq`][eq.rs] for a stricter version of `PartialEq`.
+- [`Eq`][eq.rs] para una versión más estricta de `PartialEq`
 
 [partialeq.rs]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
 [eq.rs]: https://doc.rust-lang.org/std/cmp/trait.Eq.html
