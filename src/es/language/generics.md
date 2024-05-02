@@ -1,9 +1,10 @@
-# Generics
+# Genéricos
 
-Generics in C# provide a way to create definitions for types and methods that
-can be parameterized over other types. This improves code reuse, type-safety
-and performance (e.g. avoid run-time casts). Consider the following example
-of a generic type that adds a timestamp to any value:
+Los genéricos en C# proporcionan una forma de crear definiciones para tipos y 
+métodos que pueden ser parametrizados sobre otros tipos. Esto mejora la 
+reutilización de código, la seguridad de tipos y el rendimiento (por ejemplo, 
+evita conversiones en tiempo de ejecución). Considera el siguiente ejemplo de un
+tipo genérico que agrega una marca de tiempo a cualquier valor:
 
 ```csharp
 using System;
@@ -14,7 +15,8 @@ sealed record Timestamped<T>(DateTime Timestamp, T Value)
 }
 ```
 
-Rust also has generics as shown by the equivalent of the above:
+Rust también tiene genéricos, como se muestra en el equivalente del ejemplo 
+anterior:
 
 ```rust
 use std::time::*;
@@ -28,22 +30,22 @@ impl<T> Timestamped<T> {
 }
 ```
 
-See also:
+Mira también:
 
-- [Generic data types]
+- [Tipos de Datos Genéricos]
 
-[Generic data types]: https://doc.rust-lang.org/book/ch10-01-syntax.html
+[Tipos de Datos Genéricos]: https://www.rustlang-es.org/rust-book-es/ch10-01-syntax.html
 
-## Generic type constraints
+## Restricciones de tipo genérico
 
-In C#, [generic types can be constrained][type-constraints.cs] using the `where`
-clause. The following example shows such constraints in C#:
+En C#, los [tipos genéricos pueden ser restringidos][type-constraints.cs] usando
+la palabra clave where. El siguiente ejemplo muestra tales restricciones en C#:
 
 ```csharp
 using System;
 
-// Note: records automatically implement `IEquatable`. The following
-// implementation shows this explicitly for a comparison to Rust.
+// Nota: los registros implementan automáticamente `IEquatable`. La siguiente
+// implementación muestra esto explícitamente para una comparación con Rust.
 sealed record Timestamped<T>(DateTime Timestamp, T Value) :
     IEquatable<Timestamped<T>>
     where T : IEquatable<T>
@@ -59,7 +61,7 @@ sealed record Timestamped<T>(DateTime Timestamp, T Value) :
 }
 ```
 
-The same can be achieved in Rust:
+Lo mismo se puede lograr en Rust:
 
 ```rust
 use std::time::*;
@@ -80,21 +82,22 @@ impl<T> PartialEq for Timestamped<T>
 }
 ```
 
-Generic type constraints are called [bounds][bounds.rs] in Rust.
+En Rust, las restricciones de tipo genérico se llaman [bounds][bounds.rs].
 
-In C# version, `Timestamped<T>` instances can _only_ be created for `T` which
-implement `IEquatable<T>` themselves, but note that the Rust version is more
-flexible because it `Timestamped<T>` _conditionally implements_ `PartialEq`.
-This means that `Timestamped<T>` instances can still be created for some
-non-equatable `T`, but then `Timestamped<T>` will not implement equality via
-`PartialEq` for such a `T`.
+En la versión de C#, las instancias de `Timestamped<T>` solo pueden crearse para
+`T` que implementen `IEquatable<T>` ellos mismos, pero ten en cuenta que la 
+versión de Rust es más flexible porque `Timestamped<T>` 
+_implementa condicionalmente_ `PartialEq`. Esto significa que las instancias de 
+`Timestamped<T>` aún pueden crearse para algunos `T` que no son equiparables, 
+pero entonces `Timestamped<T>` no implementará la igualdad a través de 
+`PartialEq` para dicho `T`.
 
-See also:
+Mira también:
 
-- [Traits as parameters]
-- [Returning types that implement traits]
+- [Traits como parametros]
+- [Devolviendo tipos que implementan traits]
 
-[type-constraints.cs]: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/generics/constraints-on-type-parameters
+[type-constraints.cs]: https://learn.microsoft.com/es-es/dotnet/csharp/programming-guide/generics/constraints-on-type-parameters
 [bounds.rs]: https://doc.rust-lang.org/rust-by-example/generics/bounds.html
-[Traits as parameters]: https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters
-[Returning types that implement traits]: https://doc.rust-lang.org/book/ch10-02-traits.html#returning-types-that-implement-traits
+[Traits como parametros]: https://www.rustlang-es.org/rust-book-es/ch10-02-traits.html#traits-como-parametros
+[Devolviendo tipos que implementan traits]: https://www.rustlang-es.org/rust-book-es/ch10-02-traits.html#devolviendo-tipos-que-implementan-traits
