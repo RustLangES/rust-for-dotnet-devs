@@ -21,7 +21,7 @@
   - [Variables](./language/variables.md)
   - [Namespaces](./language/namespaces.md)
   - [Equality](./language/equality.md)
-  - [Generics](./language/generics.md)
+  - [Genéricos](./language/generics.md)
   - [Polimorfismo](./language/polymorphism.md)
   - [Herencia](./language/inheritance.md)
   - [Exception Handling](./language/exception-handling.md)
