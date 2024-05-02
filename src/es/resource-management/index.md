@@ -1,32 +1,34 @@
-# Resource Management
+# Administración de Recursos
 
-Previous section on [memory management] explains the differences between .NET
-and Rust when it comes to GC, ownership and finalizers. It is highly recommended
-to read it.
+En la sección anterior, [Administración de Memoria] explicamos la diferencia 
+entre .NET y Rust cuando se trata del Garbage Collector, Ownership y finalizadores.
+Esto is altamente recomendado para leer.
 
-This section is limited to providing an example of a fictional
-_database connection_ involving a SQL connection to be properly
-closed/disposed/dropped
+Esta sección es limitada a proporcionar un ejemplo de una conexión de base de 
+datos ficticia que involucra una conexión SQL que debe 
+cerrarse/[disposed]/destruirse adecuadamente.
+
+  [disposed]: https://learn.microsoft.com/es-es/dotnet/standard/garbage-collection/implementing-dispose
 
 ```csharp
 {
     using var db1 = new DatabaseConnection("Server=A;Database=DB1");
     using var db2 = new DatabaseConnection("Server=A;Database=DB2");
 
-    // ...code using "db1" and "db2"...
-}   // "Dispose" of "db1" and "db2" called here; when their scope ends
+    // ...código usando "db1" y "db2"...
+}   // "Dispose" de "db1" y "db2" se llamabara aquí; cuando su scope termine
 
 public class DatabaseConnection : IDisposable
 {
     readonly string connectionString;
-    SqlConnection connection; //this implements IDisposable
+    SqlConnection connection; //Esto implementa IDisposable
 
     public DatabaseConnection(string connectionString) =>
         this.connectionString = connectionString;
 
     public void Dispose()
     {
-        //Making sure to dispose the SqlConnection
+        //Asegurando que se desecha la SqlConnection
         this.connection.Dispose();
         Console.WriteLine("Closing connection: {this.connectionString}");
     }
@@ -37,15 +39,15 @@ public class DatabaseConnection : IDisposable
 struct DatabaseConnection(&'static str);
 
 impl DatabaseConnection {
-    // ...functions for using the database connection...
+    // ...funciones para usar la conexión de base de datos...
 }
 
 impl Drop for DatabaseConnection {
     fn drop(&mut self) {
-        // ...closing connection...
+        // ...cerrando la conexión...
         self.close_connection();
-        // ...printing a message...
-        println!("Closing connection: {}", self.0)
+        // ...imprimiendo un mensaje...
+        println!("Cerrando conexión: {}", self.0)
     }
 }
 
@@ -53,11 +55,12 @@ fn main() {
     let _db1 = DatabaseConnection("Server=A;Database=DB1");
     let _db2 = DatabaseConnection("Server=A;Database=DB2");
     // ...code for making use of the database connection...
-} // "Dispose" of "db1" and "db2" called here; when their scope ends
+    // ...codigo para utilizar la conexión a la base de datos...
+}   // "Dispose" de "db1" y "db2" se llamabara aquí; cuando su scope termine
 ```
 
-In .NET, attempting to use an object after calling `Dispose` on it will typically
-cause `ObjectDisposedException` to be thrown at runtime. In Rust, the compiler
-ensures at compile-time that this cannot happen.
+En .NET, intentar usar un objeto después de llamar a `Dispose` en él típicamente
+causará que se lance una `ObjectDisposedException` en tiempo de ejecución. En 
+Rust, el compilador garantiza en tiempo de compilación que esto no puede suceder.
 
-[memory management]: ../memory-management/index.md
+[Administración de Memoria]: ../memory-management/index.md
