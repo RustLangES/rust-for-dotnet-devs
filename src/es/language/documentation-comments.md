@@ -8,7 +8,6 @@ legible para humanos en una forma diferente. Un ejemplo simple en C#:
 
 ```csharp
 /// <summary>
-/// This is a document comment for <c>MyClass</c>.
 /// Esto es un comentario para documentar <c>MyClass</c>.
 /// </summary>
 public class MyClass {}
