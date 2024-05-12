@@ -1,36 +1,39 @@
-# Documentation Comments
+# Comentarios de Documentación
 
-C# provides a mechanism to document the API for types using a comment syntax
-that contains XML text. The C# compiler produces an XML file that contains
-structured data representing the comments and the API signatures. Other tools
-can process that output to provide human-readable documentation in a different
-form. A simple example in C#:
+C# provee un mecanismo para documentar las APIs para tipos usando la sintaxis de
+un comentario que contiene texto XML. El compilador de C# produce un archivo XML
+que contiene estructuras de datos representando el comentario y la firma de la 
+API. Otras herramientas pueden procesar la salida para proveer documentación 
+legible para humanos en una forma diferente. Un ejemplo simple en C#:
 
 ```csharp
 /// <summary>
 /// This is a document comment for <c>MyClass</c>.
+/// Esto es un comentario para documentar <c>MyClass</c>.
 /// </summary>
 public class MyClass {}
 ```
 
-In Rust [doc comments] provide the equivalent to C# documentation comments.
-Documentation comments in Rust use Markdown syntax. [`rustdoc`][rustdoc] is the
-documentation compiler for Rust code and is usually invoked through [`cargo
-doc`][cargo doc], which compiles the comments into documentation. For example:
+En Rust, los [comentarios de documentación] proporcionan el equivalente a los 
+comentarios de documentación de C#. Los comentarios de documentación en Rust 
+utilizan la sintaxis de Markdown. [rustdoc][rustdoc] es el compilador de 
+documentación para el código Rust y generalmente se invoca a través de 
+[cargo doc][cargo doc], que compila los comentarios en documentación. 
+Por ejemplo:
 
 ```rust
-/// This is a doc comment for `MyStruct`.
+/// Este es un comentario de documentación para `MyStruct`.
 struct MyStruct;
 ```
 
-In the .NET SDK there is no equivalent to `cargo doc`, such as `dotnet doc`.
+En el .Net SDK hay equivalente a `cargo doc`, como `dotnet doc`.
 
-See also:
+Mira también:
 
 - [How to write documentation]
 - [Documentation tests]
 
-[doc comments]: https://doc.rust-lang.org/rust-by-example/meta/doc.html
+[comentarios de documentación]: https://doc.rust-lang.org/rust-by-example/meta/doc.html
 [rustdoc]: https://doc.rust-lang.org/rustdoc/index.html
 [cargo doc]: https://doc.rust-lang.org/cargo/commands/cargo-doc.html
 [How to write documentation]: https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html

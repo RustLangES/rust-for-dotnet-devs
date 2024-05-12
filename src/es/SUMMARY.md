@@ -29,7 +29,7 @@
   - [Descartes](./language/discards.md)
   - [Conversión y Casting](./language/conversion-and-casting.md)
   - [Sobrecarga de operadores](./language/operator-overloading.md)
-  - [Documentation Comments](./language/documentation-comments.md)
+  - [Comentarios de Documentación](./language/documentation-comments.md)
 - [Memory Management](./memory-management/index.md)
 - [Resource Management](./resource-management/index.md)
 - [Threading](./threading/index.md)
