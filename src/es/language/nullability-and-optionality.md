@@ -1,4 +1,4 @@
-# Nullabilidad y Opcionalidad
+# Nulabilidad y Opcionalidad
 
 En C#, `null` es a veces usado para representar un valor que es faltante, ausente
 o lógicamente no inicializado. Por ejemplo:
