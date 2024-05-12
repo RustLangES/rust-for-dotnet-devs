@@ -76,7 +76,7 @@ Comúnmente, los tipos de .Net proveen operadores de conversión definidos por e
 usuario para convertir un tipo a otro tipo. También, `System.IConvertible` tiene
 el propósito de convertir un tipo en otro.
 
-En Rust, la librería estandar contiene una abstracción para convertir un valor en
+En Rust, la librería estándar contiene una abstracción para convertir un valor en
 un tipo diferente, con el trait [`From`][from.rs] y recíprocamente [`Into`][into.rs].
 Cuando implementas `From` para un tipo, una implementación por default de `Into`
 es automáticamente provista (A esto se le llama _blanket implementation_ en Rust).
