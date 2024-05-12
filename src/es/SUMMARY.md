@@ -25,7 +25,7 @@
   - [Polimorfismo](./language/polymorphism.md)
   - [Herencia](./language/inheritance.md)
   - [Manejo de Excepciones](./language/exception-handling.md)
-  - [Nullability and Optionality](./language/nullability-and-optionality.md)
+  - [Nullabilidad y Opcionalidad](./language/nullability-and-optionality.md)
   - [Descartes](./language/discards.md)
   - [Conversion and Casting](./language/conversion-and-casting.md)
   - [Sobrecarga de operadores](./language/operator-overloading.md)

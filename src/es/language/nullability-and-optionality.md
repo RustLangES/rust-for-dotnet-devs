@@ -1,74 +1,75 @@
-# Nullability and Optionality
+# Nullabilidad y Opcionalidad
 
-In C#, `null` is often used to represent a value that is missing, absent or
-logically uninitialized. For example:
+En C#, `null` es a veces usado para representar un valor que es faltante, ausente
+o lógicamente no inicializado. Por ejemplo:
 
 ```csharp
 int? some = 1;
 int? none = null;
 ```
 
-Rust has no `null` and consequently no nullable context to enable. Optional or
-missing values are instead represented by [`Option<T>`][option]. The
-equivalent of the C# code above in Rust would be:
+Rust no tiene `null` y consecuencialmente contexto no nulleable para habilitar.
+Los valores opcionales o faltantes son representados por [`Option<T>`][option]
+en su lugar. El equivalente de el código C# de arriba en Rust debería ser:
 
 ```rust
 let some: Option<i32> = Some(1);
 let none: Option<i32> = None;
 ```
 
-`Option<T>` in Rust is practically identical to [`'T option`][opt.fs] from F#.
+`Option<T>` en Rust es prácticamente idéntico a [`'T option`][opt.fs] de F#.
 
 [opt.fs]: https://fsharp.github.io/fsharp-core-docs/reference/fsharp-core-option-1.html
 
-## Control flow with optionality
+## Flujo de Control con Opcionabilidad
 
-In C#, you may have been using `if`/`else` statements for controlling the flow
-when using nullable values.
+En C#, tal vez estes usando sentencias `if`/`else` para controlar el flujo 
+cuando uses valores nulleables.
+
 
 ```csharp
 uint? max = 10;
 if (max is { } someMax)
 {
-    Console.WriteLine($"The maximum is {someMax}."); // The maximum is 10.
+    Console.WriteLine($"El máximo es {someMax}."); // El máximo es 10.
 }
 ```
 
-You can use pattern matching to achieve the same behavior in Rust:
+Tu puedes usar pattern matching para lograr el mismo comportamiento en Rust:
 
-It would even be more concise to use `if let`:
+Sería más conciso usar `if let`:
 
 ```rust
 let max = Some(10u32);
 if let Some(max) = max {
-    println!("The maximum is {}.", max); // The maximum is 10.
+    println!("El máximo es {}.", max); // El máximo es 10.
 }
 ```
 
-## Null-conditional operators
+## Operadores de Condición Nula
 
-The null-conditional operators (`?.` and `?[]`) make dealing with `null` in C#
-more ergonomic. In Rust, they are best replaced by using the [`map`][optmap]
-method. The following snippets show the correspondence:
+Los operadores null-condicionales (`?.` y `?[]`) facilitan el manejo de null en 
+C#. En Rust, es mejor reemplazarlos usando el método [`map`][optmap]. El siguiente
+fragmento muestra la comparación:
 
 ```csharp
-string? some = "Hello, World!";
+string? some = "Hola, Mundo!";
 string? none = null;
-Console.WriteLine(some?.Length); // 13
+Console.WriteLine(some?.Length); // 12
 Console.WriteLine(none?.Length); // (blank)
 ```
 
 ```rust
-let some: Option<String> = Some(String::from("Hello, World!"));
+let some: Option<String> = Some(String::from("Hola, Mundo!"));
 let none: Option<String> = None;
-println!("{:?}", some.map(|s| s.len())); // Some(13)
+println!("{:?}", some.map(|s| s.len())); // Some(12)
 println!("{:?}", none.map(|s| s.len())); // None
 ```
 
 ## Null-coalescing operator
 
-The null-coalescing operator (`??`) is typically used to default to another
-value when a nullable is `null`:
+El null-coalescing operator (`??`) es típicamente usado para por defecto usar 
+otro valor cuando un nulleable es `null`:
 
 ```csharp
 int? some = 1;
@@ -77,7 +78,8 @@ Console.WriteLine(some ?? 0); // 1
 Console.WriteLine(none ?? 0); // 0
 ```
 
-In Rust, you can use [`unwrap_or`][unwrap-or] to get the same behavior:
+En Rust, tu puedes usar [`unwrap_or`][unwrap-or] para obtener el mismo 
+comportamiento:
 
 ```rust
 let some: Option<i32> = Some(1);
@@ -86,16 +88,18 @@ println!("{:?}", some.unwrap_or(0)); // 1
 println!("{:?}", none.unwrap_or(0)); // 0
 ```
 
-**Note**: If the default value is expensive to compute, you can use
-`unwrap_or_else` instead. It takes a closure as an argument, which allows you to
-lazily initialize the default value.
+**Nota**: Si el valor por defecto es costoso para computar, tu puedes usar 
+`unwrap_or_else` en su lugar. Este tomara una [closure] como argumento, la cual
+permitirá inicializar un valor por defecto de forma [perezosa].
 
 ## Null-forgiving operator
 
-The null-forgiving operator (`!`) does not correspond to an equivalent construct
-in Rust, as it only affects the compiler's static flow analysis in C#. In Rust,
-there is no need to use a substitute for it.
+El operador null-forgiving (`!`) no corresponde a un equivalente construido en 
+Rust, como este solo afecta al flujo de análisis estático en el compilador de C#.
+En Rust, esto no es necesario de usar para un sustituto de este.
 
 [option]: https://doc.rust-lang.org/std/option/enum.Option.html
 [optmap]: https://doc.rust-lang.org/std/option/enum.Option.html#method.map
 [unwrap-or]: https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_or
+[perezosa]: https://es.wikipedia.org/wiki/Evaluación_perezosa
+[closure]: ../language/lambda-and-closures
