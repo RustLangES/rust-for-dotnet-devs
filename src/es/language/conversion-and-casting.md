@@ -106,4 +106,4 @@ Mirar también:
 [into.rs]: https://doc.rust-lang.org/std/convert/trait.Into.html
 [try-from.rs]: https://doc.rust-lang.org/std/convert/trait.TryFrom.html
 [try-into.rs]: https://doc.rust-lang.org/std/convert/trait.TryInto.html
-[pánico]: https://www.rustlang-es.org/rust-book-es/ch09-01-unrecoverable-errors-with-panic.html#errores-irrecuperables-con-panic
+[pánico]: https://book.rustlang-es.org/ch09-01-unrecoverable-errors-with-panic.html#errores-irrecuperables-con-panic

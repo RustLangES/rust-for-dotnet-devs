@@ -160,11 +160,11 @@ soportado en Rust experimental cuando usamos el [método provide].
 
 [net-system-exception]: https://learn.microsoft.com/es-ES/dotnet/api/system.exception?view=net-6.0
 [rust-result]: https://doc.rust-lang.org/std/result/enum.Result.html
-[panic-backtrace]: https://www.rustlang-es.org/rust-book-es/ch09-01-unrecoverable-errors-with-panic.html#usando-el-backtrace-de-panic
+[panic-backtrace]: https://book.rustlang-es.org/ch09-01-unrecoverable-errors-with-panic.html#usando-el-backtrace-de-panic
 [net-user-defined-exceptions]: https://learn.microsoft.com/es-ES/dotnet/standard/exceptions/how-to-create-user-defined-exceptions
 [rust-std-error]: https://doc.rust-lang.org/std/error/trait.Error.html
 [método provide]: https://doc.rust-lang.org/std/error/trait.Error.html#method.provide
 [question-mark-operator]: https://doc.rust-lang.org/std/result/index.html#the-question-mark-operator-
 [panic]: https://doc.rust-lang.org/std/macro.panic.html
-[propagating-errors-rust-book]: https://www.rustlang-es.org/rust-book-es/ch09-02-recoverable-errors-with-result.html#un-atajo-para-propagar-errores-el-operador-
+[propagating-errors-rust-book]: https://book.rustlang-es.org/ch09-02-recoverable-errors-with-result.html#un-atajo-para-propagar-errores-el-operador-
 [trait object]: https://doc.rust-lang.org/reference/types/trait-object.html

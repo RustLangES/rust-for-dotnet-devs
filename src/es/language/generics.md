@@ -34,7 +34,7 @@ Mira también:
 
 - [Tipos de Datos Genéricos]
 
-[Tipos de Datos Genéricos]: https://www.rustlang-es.org/rust-book-es/ch10-01-syntax.html
+[Tipos de Datos Genéricos]: https://book.rustlang-es.org/ch10-01-syntax.html
 
 ## Restricciones de tipo genérico
 
@@ -99,5 +99,5 @@ Mira también:
 
 [type-constraints.cs]: https://learn.microsoft.com/es-es/dotnet/csharp/programming-guide/generics/constraints-on-type-parameters
 [bounds.rs]: https://doc.rust-lang.org/rust-by-example/generics/bounds.html
-[Traits como parametros]: https://www.rustlang-es.org/rust-book-es/ch10-02-traits.html#traits-como-parametros
-[Devolviendo tipos que implementan traits]: https://www.rustlang-es.org/rust-book-es/ch10-02-traits.html#devolviendo-tipos-que-implementan-traits
+[Traits como parametros]: https://book.rustlang-es.org/ch10-02-traits.html#traits-como-parametros
+[Devolviendo tipos que implementan traits]: https://book.rustlang-es.org/ch10-02-traits.html#devolviendo-tipos-que-implementan-traits
