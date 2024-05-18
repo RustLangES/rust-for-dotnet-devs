@@ -1,26 +1,12 @@
-# Memory Management
+# Gestión de Memoria
 
-Like C# and .NET, Rust has _memory-safety_ to avoid a whole class of bugs
-related to memory access, and which end up being the source of many security
-vulnerabilities in software. However, Rust can guarantee memory-safety at
-compile-time; there is no run-time (like the CLR) making checks. The one
-exception here is array bound checks that are done by the compiled code at
-run-time, be that the Rust compiler or the JIT compiler in .NET. Like C#, it
-is also [possible to write unsafe code in Rust][unsafe-rust], and in fact,
-both languages even share the same keyword, _literally_ `unsafe`, to mark
-functions and blocks of code where memory-safety is no longer guaranteed.
+Al igual que C# y .NET, Rust tiene _memoria segura_ para evitar toda clase de errores relacionados con el acceso a la memoria, que terminan siendo la fuente de muchas vulnerabilidades de seguridad en el software. Sin embargo, Rust puede garantizar la seguridad de memoria en tiempo de compilación; no hay una verificación en tiempo de ejecución (como el CLR). La única excepción aquí son las verificaciones de límites de arreglos que realiza el código compilado en tiempo de ejecución, ya sea el compilador de Rust o el compilador JIT en .NET. Al igual que en C#, también es [posible escribir código inseguro en Rust][unsafe-rust], y de hecho, ambos lenguajes incluso comparten la misma palabra clave, _literalmente_ `unsafe`, para marcar funciones y bloques de código donde ya no se garantiza la seguridad de memoria.
 
-  [unsafe-rust]: https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html
+  [unsafe-rust]: https://book.rustlang-es.org/ch19-01-unsafe-rust
 
-Rust has no garbage collector (GC). All memory management is entirely the
-responsibility of the developer. That said, _safe Rust_ has rules around
-ownership that ensure memory is freed _as soon as_ it's no longer in use (e.g.
-when leaving the scope of a block or a function). The compiler does a
-tremendous job, through (compile-time) static analysis, of helping manage that
-memory through [ownership] rules. If violated, the compiler rejects the code
-with a compilation error.
+Rust no tiene un garbage collector (GC). Toda la gestión de memoria es completamente responsabilidad del desarrollador. Dicho esto, _Rust seguro_ tiene reglas rodeando el concepto de _ownership_ que aseguran que la memoria se libere _tan pronto como_ ya no esté en uso (por ejemplo, al salir del ámbito de un bloque o de una función). El compilador hace un trabajo tremendo, a través del análisis estático en tiempo de compilación, para ayudar a gestionar esa memoria mediante las reglas de [ownership]. Si se violan, el compilador rechaza el código con un error de compilación.
 
-  [ownership]: https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html
+  [ownership]: https://book.rustlang-es.org/ch04-01-what-is-ownership
 
 In .NET, there is no concept of ownership of memory beyond the GC roots
 (static fields, local variables on a thread's stack, CPU registers, handles,
