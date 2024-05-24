@@ -30,7 +30,7 @@
   - [Conversión y Casting](./language/conversion-and-casting.md)
   - [Sobrecarga de operadores](./language/operator-overloading.md)
   - [Comentarios de Documentación](./language/documentation-comments.md)
-- [Memory Management](./memory-management/index.md)
+- [Gestión de Memoria](./memory-management/index.md)
 - [Resource Management](./resource-management/index.md)
 - [Threading](./threading/index.md)
   - [Synchronization](./threading/synchronization.md)
