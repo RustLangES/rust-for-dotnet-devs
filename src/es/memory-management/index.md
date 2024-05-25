@@ -1,36 +1,56 @@
 # Gestión de Memoria
 
-Al igual que C# y .NET, Rust tiene _memoria segura_ para evitar toda clase de errores relacionados con el acceso a la memoria, que terminan siendo la fuente de muchas vulnerabilidades de seguridad en el software. Sin embargo, Rust puede garantizar la seguridad de memoria en tiempo de compilación; no hay una verificación en tiempo de ejecución (como el CLR). La única excepción aquí son las verificaciones de límites de arreglos que realiza el código compilado en tiempo de ejecución, ya sea el compilador de Rust o el compilador JIT en .NET. Al igual que en C#, también es [posible escribir código inseguro en Rust][unsafe-rust], y de hecho, ambos lenguajes incluso comparten la misma palabra clave, _literalmente_ `unsafe`, para marcar funciones y bloques de código donde ya no se garantiza la seguridad de memoria.
+Al igual que C# y .NET, Rust tiene _memoria segura_ para evitar toda clase de 
+errores relacionados con el acceso a la memoria, que terminan siendo la fuente 
+de muchas vulnerabilidades de seguridad en el software. Sin embargo, Rust puede 
+garantizar la seguridad de memoria en tiempo de compilación; no hay una 
+verificación en tiempo de ejecución (como el CLR). La única excepción aquí son 
+las verificaciones de límites de arreglos que realiza el código compilado en 
+tiempo de ejecución, ya sea el compilador de Rust o el compilador JIT en .NET. 
+Al igual que en C#, también es 
+[posible escribir código inseguro en Rust][unsafe-rust], y de hecho, ambos 
+lenguajes incluso comparten la misma palabra clave, _literalmente_ `unsafe`, 
+para marcar funciones y bloques de código donde ya no se garantiza la seguridad 
+de memoria.
 
   [unsafe-rust]: https://book.rustlang-es.org/ch19-01-unsafe-rust
 
-Rust no tiene un garbage collector (GC). Toda la gestión de memoria es completamente responsabilidad del desarrollador. Dicho esto, _Rust seguro_ tiene reglas rodeando el concepto de _ownership_ que aseguran que la memoria se libere _tan pronto como_ ya no esté en uso (por ejemplo, al salir del ámbito de un bloque o de una función). El compilador hace un trabajo tremendo, a través del análisis estático en tiempo de compilación, para ayudar a gestionar esa memoria mediante las reglas de [ownership]. Si se violan, el compilador rechaza el código con un error de compilación.
+Rust no tiene un garbage collector (GC). Toda la gestión de memoria es 
+completamente responsabilidad del desarrollador. Dicho esto, _Rust seguro_ tiene 
+reglas rodeando el concepto de _ownership_ que aseguran que la memoria se libere 
+_tan pronto como_ ya no esté en uso (por ejemplo, al salir del ámbito de un 
+bloque o de una función). El compilador hace un trabajo tremendo, a través del 
+análisis estático en tiempo de compilación, para ayudar a gestionar esa memoria 
+mediante las reglas de [ownership]. Si se violan, el compilador rechaza el 
+código con un error de compilación.
 
   [ownership]: https://book.rustlang-es.org/ch04-01-what-is-ownership
 
-In .NET, there is no concept of ownership of memory beyond the GC roots
-(static fields, local variables on a thread's stack, CPU registers, handles,
-etc.). It is the GC that walks from the roots during a collection to detemine
-all memory in use by following references and purging the rest. When designing
-types and writing code, a .NET developer can remain oblivious to ownership,
-memory management and even how the garbage collector works for the most part,
-except when performance-sensitive code requires paying attention to the amount
-and rate at which objects are being allocated on the heap. In contrast, Rust's
-ownership rules require the developer to explicitly think and express
-ownership at all times and it impacts everything from the design of functions,
-types, data structures to how the code is written. On top of that, Rust has
-strict rules about how data is used such that it can identify at compile-time,
-data [race conditions] as well as corruption issues (requiring thread-safety)
-that could potentially occur at run-time. This section will only focus on
-memory management and ownership.
+En .NET, no existe el concepto de ownership de la memoria más allá de las raíces 
+del Gargabe Collector (campos estáticos, variables locales en la pila de un hilo, 
+registros de la CPU, manejadores, etc.). Es el GC quien recorre desde las raíces 
+durante una recolección para determinar toda la memoria en uso siguiendo las 
+referencias y purgando el resto. Al diseñar tipos y escribir código, un 
+desarrollador de .NET puede permanecer ajeno al ownership, la gestión de memoria
+e incluso al funcionamiento del recolector de basura en su mayor parte, excepto 
+cuando el código sensible al rendimiento requiere prestar atención a la cantidad 
+y la velocidad a la que se asignan objetos en el montón. En contraste, las 
+reglas del ownership de Rust requieren que el desarrollador piense y exprese 
+explícitamente la propiedad en todo momento y esto impacta todo, desde el diseño 
+de funciones, tipos, estructuras de datos hasta la forma en que se escribe el 
+código. Además de eso, Rust tiene reglas estrictas sobre cómo se utiliza la 
+información, de tal manera que puede identificar en tiempo de compilación 
+data [race conditions], así como problemas de corrupción (requiriendo seguridad 
+en hilos) que podrían ocurrir potencialmente en tiempo de ejecución. Esta 
+sección solo se enfocará en la gestión de memoria y la propiedad.
 
   [race conditions]: https://doc.rust-lang.org/nomicon/races.html
 
-There can only be one owner of some memory, be that on the stack or heap,
-backing a structure at any given time in Rust. The compiler assigns
-[lifetimes][lifetimes.rs] and tracks ownership. It is possible to pass or
-yield ownership, which is called _moving_ in Rust. These ideas are briefly
-illustrated in the example Rust code below:
+En Rust, solo puede haber un propietario de una porción de memoria, ya sea en el
+stack o en el heap, respaldando una estructura en un momento dado. El compilador 
+asigna [lifetimes][lifetimes.rs] y rastrea el ownership. Es posible pasar o 
+ceder el ownership, lo cual se denomina _mover_ en Rust. Estas ideas se ilustran 
+brevemente en el siguiente código de ejemplo de Rust:
 
   [lifetimes.rs]: https://doc.rust-lang.org/rust-by-example/scope/lifetime.html
 
@@ -43,63 +63,67 @@ struct Point {
 }
 
 fn main() {
-    let a = Point { x: 12, y: 34 }; // point owned by a
-    let b = a;                      // b owns the point now
-    println!("{}, {}", a.x, a.y);   // compiler error!
+  let a = Point { x: 12, y: 34 }; // La instancia de Point es propiedad de a
+  let b = a;                      // ahora b es propietario de la instancia de Point
+  println!("{}, {}", a.x, a.y);   // ¡error de compilación!
 }
 ```
 
-The first statement in `main` will allocate `Point` and that memory will be
-owned by `a`. In the second statement, the ownership is moved from `a` to `b`
-and `a` can no longer be used because it no longer owns anything or represents
-valid memory. The last statement that tries to print the fields of the point
-via `a` will fail compilation. Suppose `main` is fixed to read as follows:
+La primera instrucción en `main` asignará un `Point` y esa memoria será 
+propiedad de `a`. En la segunda instrucción, la propiedad se mueve de `a` a `b` 
+y `a` ya no puede ser utilizado porque ya no posee nada ni representa una 
+memoria válida. La última instrucción que intenta imprimir los campos del punto 
+a través de `a` fallará en la compilación. Supongamos que `main` se corrige para 
+leerse de la siguiente manera:
 
 ```rust
 fn main() {
-    let a = Point { x: 12, y: 34 }; // point owned by a
-    let b = a;                      // b owns the point now
-    println!("{}, {}", b.x, b.y);   // ok, uses b
-}   // point behind b is dropped
+    let a = Point { x: 12, y: 34 }; // La instancia de Point es propiedad de a
+    let b = a;                      // ahora b es propietario de la instancia de Point
+    println!("{}, {}", b.x, b.y);   // ok, usamos b
+}   // Point de b es liberado
 ```
 
-Note that when `main` exits, `a` and `b` will go out of scope. The memory
-behind `b` will be released by virtue of the stack returning to its state
-prior to `main` being called. In Rust, one says that the point behind `b` was
-_dropped_. However, note that since `a` yielded its ownership of the point to
-`b`, there is nothing to drop when `a` goes out of scope.
+Nota que cuando `main` termina, `a` y `b` saldrán de su ámbito. La memoria 
+detrás de `b` será liberada en virtud de que la pila regresará a su estado 
+previo a la llamada de `main`. En Rust, se dice que el punto detrás de `b` fue 
+_descartado_. Sin embargo, dado que `a` cedió su propiedad del punto a `b`, no 
+hay nada que descartar cuando `a` sale de su ámbito.
 
-A `struct` in Rust can define code to execute when an instance is dropped by
-implementing the [`Drop`][drop.rs] trait.
+Una `struct` en Rust puede definir el código a ejecutar cuando se descarta una 
+instancia implementando el trait [`Drop`][drop.rs].
 
   [drop.rs]: https://doc.rust-lang.org/std/ops/trait.Drop.html
 
-The rough equivalent of _dropping_ in C# would be a class [finalizer], but
-while a finalizer is called _automatically_ by the GC at some future point,
-dropping in Rust is always instantaneous and deterministic; that is, it
-happens at the point the compiler has determined that an instance has no owner
-based on scopes and lifetimes. In .NET, the equivalent of `Drop` would be
-[`IDisposable`][IDisposable] and is implemented by types to release any
-unmanaged resources or memory they hold. _Deterministic disposal_ is not
-enforced or guaranteed, but the `using` statement in C# is typically used to
-scope an instance of a disposable type such that it gets disposed
-determinstically, at the end of the `using` statement's block.
+El equivalente aproximado de _dropping_ en C# sería un 
+[finalizador de clase][finalizer], pero mientras que un finalizador es llamado 
+_automáticamente_ por el GC en algún momento futuro, el _dropping_ en Rust 
+siempre es instantáneo y determinista; es decir, ocurre en el punto en que el 
+compilador ha determinado que una instancia no tiene propietario basándose en 
+los ámbitos y los lifetimes. En .NET, el equivalente de `Drop` sería 
+[`IDisposable`][IDisposable] y se implementa en tipos para liberar cualquier 
+recurso no administrado o memoria que posean. La _disposición determinística_ no 
+está impuesta ni garantizada, pero la declaración `using` en C# se utiliza 
+típicamente para delimitar el ámbito de una instancia de un tipo desechable de 
+manera que se disponga de manera determinista, al final del bloque de la 
+declaración `using`.
 
-  [finalizer]: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/finalizers
-  [IDisposable]: https://learn.microsoft.com/en-us/dotnet/api/system.idisposable
+  [finalizer]: https://learn.microsoft.com/es-ES/dotnet/csharp/programming-guide/classes-and-structs/finalizers
+  [IDisposable]: https://learn.microsoft.com/es-ES/dotnet/api/system.idisposable
 
-Rust has the notion of a global lifetime denoted by `'static`, which is a
-reserved lifetime specifier. A very rough approximation in C# would be static
-_read-only_ fields of types.
+Rust tiene la noción de un lifetime global denotada por `'static`, que es un 
+especificador de lifetime reservado. Una aproximación muy general en C# serían 
+los campos estáticos de solo lectura de los tipos.
 
-In C# and .NET, references are shared freely without much thought so the idea
-of a single owner and yielding/moving ownership may seem very limiting in
-Rust, but it is possible to have _shared ownership_ in Rust using the smart
-pointer type [`Rc`][rc.rs]; it adds reference-counting. Each time [the smart
-pointer is cloned][Rc::clone], the reference count is incremented. When the
-clone drops, the reference count is decremented. The actual instance behind
-the smart pointer is dropped when the reference count reaches zero. These
-points are illustrated by the following examples that build on the previous:
+En C# y .NET, las referencias se comparten libremente sin mucha consideración, 
+por lo que la idea de un único propietario y ceder/mover la propiedad puede 
+parecer muy limitante en Rust, pero es posible tener _propiedad compartida_ en 
+Rust utilizando el tipo de puntero inteligente [`Rc`][rc.rs]; añade un conteo de 
+referencias. Cada vez que [el puntero inteligente es clonado][Rc::clone], se 
+incrementa el conteo de referencias. Cuando el clon se descarta, el conteo de 
+referencias se decrementa. La instancia real detrás del puntero inteligente se 
+descarta cuando el conteo de referencias alcanza cero. Estos puntos se ilustran 
+mediante los siguientes ejemplos que se basan en los anteriores:
 
   [rc.rs]: https://doc.rust-lang.org/stable/std/rc/struct.Rc.html
   [Rc::clone]: https://doc.rust-lang.org/stable/std/rc/struct.Rc.html#method.clone
@@ -116,57 +140,58 @@ struct Point {
 
 impl Drop for Point {
     fn drop(&mut self) {
-        println!("Point dropped!");
+        println!("¡Point descartado!");
     }
 }
 
 fn main() {
     let a = Rc::new(Point { x: 12, y: 34 });
-    let b = Rc::clone(&a); // share with b
-    println!("a = {}, {}", a.x, a.y); // okay to use a
-    println!("b = {}, {}", b.x, b.y);
+    let b = Rc::clone(&a); // compartido con b
+    println!("a = {}, {}", a.x, a.y); // esta bien usar a
+    println!("b = {}, {}", b.x, b.y); // y b
 }
 
-// prints:
+// imprime:
 // a = 12, 34
 // b = 12, 34
-// Point dropped!
+// ¡Point descartado!
 ```
 
-Note that:
+Ten en cuenta que:
 
-- `Point` implements the `drop` method of the `Drop` trait and prints a
-  message when an instance of a `Point` is dropped.
+- `Point` implementa el método `drop` del trait `Drop` e imprime un mensaje 
+  cuando se descarta una instancia de `Point`.
 
-- The point created in `main` is wrapped behind the smart pointer `Rc` and so
-  the smart pointer _owns_ the point and not `a`.
+- El punto creado en `main` está envuelto detrás del puntero inteligente `Rc`, 
+  por lo que el puntero inteligente _posee_ el punto y no `a`.
 
-- `b` gets a clone of the smart pointer that effectively increments the
-  reference count to 2. Unlike the earlier example, where `a` transferred its
-  ownership of point to `b`, both `a` and `b` own their own distinct clones of
-  the smart pointer, so it is okay to continue to use `a` and `b`.
+- `b` obtiene un clon del puntero inteligente que efectivamente incrementa el 
+  conteo de referencias a 2. A diferencia del ejemplo anterior, donde `a` 
+  transfirió la propiedad del punto a `b`, tanto `a` como `b` poseen sus propios 
+  clones distintos del puntero inteligente, por lo que está bien seguir usando 
+  `a` y `b`.
 
-- The compiler will have determined that `a` and `b` go out of scope at the
-  end of `main` and therefore injected calls to drop each. The `Drop`
-  implementation of `Rc` will decrement the reference count and also drop what
-  it owns if the reference count has reached zero. When that happens, the
-  `Drop` implementation of `Point` will print the message, &ldquo;Point
-  dropped!&rdquo; The fact that the message is printed once demonstrates that
-  only one point was created, shared and dropped.
+- El compilador habrá determinado que `a` y `b` salen de su ámbito al final de 
+  `main` y por lo tanto inyectará llamadas para descartar cada uno. La 
+  implementación de `Drop` de `Rc` decrementará el conteo de referencias y 
+  también descartará lo que posee si el conteo de referencias ha alcanzado cero. 
+  Cuando eso sucede, la implementación de `Drop` de `Point` imprimirá el mensaje, 
+  &ldquo;¡Point descartado!&rdquo;. El hecho de que el mensaje se imprima una 
+  vez demuestra que solo se creó, compartió y descartó un punto.
 
-`Rc` is not thread-safe. For shared ownership in a multi-threaded program, the
-Rust standard library offers [`Arc`][arc.rs] instead. The Rust language will
-prevent the use of `Rc` across threads.
+`Rc` no es seguro para hilos. Para la propiedad compartida en un programa 
+multiproceso, la biblioteca estándar de Rust ofrece [`Arc`][arc.rs] en su lugar. 
+El lenguaje Rust evitará el uso de `Rc` entre hilos.
 
   [arc.rs]: https://doc.rust-lang.org/std/sync/struct.Arc.html
 
-In .NET, value types (like `enum` and `struct` in C#) live on the stack and
-reference types (`interface`, `record class` and `class` in C#) are
-heap-allocated. In Rust, the kind of type (basically `enum` or `struct` _in
-Rust_), does not determine where the backing memory will eventually live. By
-default, it is always on the stack, but just the way .NET and C# have a notion
-of boxing value types, which copies them to the heap, the way to allocate a
-type on the heap is to box it using [`Box`][box.rs]:
+En .NET, los tipos de valor (como `enum` y `struct` en C#) residen en el stack y 
+los tipos de referencia (`interface`, `record class` y `class` en C#) se asignan 
+en el heap. En Rust, el tipo de tipo (básicamente `enum` o `struct` _en Rust_) 
+no determina dónde residirá finalmente la memoria de respaldo. Por defecto, 
+siempre está en el stack, pero al igual que .NET y C# tienen la noción de hacer 
+boxing de los tipos de valor, lo que los copia al heap, la forma de asignar un 
+tipo en el heap es hacer boxing usando [`Box`][box.rs]:
 
   [box.rs]: https://doc.rust-lang.org/std/boxed/struct.Box.html
 
@@ -175,13 +200,14 @@ let stack_point = Point { x: 12, y: 34 };
 let heap_point = Box::new(Point { x: 12, y: 34 });
 ```
 
-Like `Rc` and `Arc`, `Box` is a smart pointer, but unlike `Rc` and `Arc`, it
-exclusively owns the instance behind it. All of these smart pointers allocate
-an instance of their type argument `T` on the heap.
+Al igual que `Rc` y `Arc`, `Box` es un puntero inteligente, pero a diferencia de 
+`Rc` y `Arc`, posee exclusivamente la instancia detrás de él. Todos estos 
+punteros inteligentes asignan una instancia de su argumento de tipo `T` en 
+el heap.
 
-The `new` keyword in C# creates an instance of a type, and while members such
-as `Box::new` and `Rc::new` that you see in the examples may seem to have a
-similar purpose, `new` has no special designation in Rust. It's merely a
-_coventional name_ that is meant to denote a factory. In fact they are called
-_associated functions_ of the type, which is Rust's way of saying static
-methods.
+La palabra clave `new` en C# crea una instancia de un tipo, y aunque miembros 
+como `Box::new` y `Rc::new` que ves en los ejemplos pueden parecer tener un 
+propósito similar, `new` no tiene una designación especial en Rust. Es 
+simplemente un _nombre convencional_ que se utiliza para denotar un factory. 
+De hecho, se les llama _funciones asociadas_ del tipo, que es la manera de Rust 
+de decir métodos estáticos.
