@@ -37,7 +37,7 @@
   - [Productor-Consumidor](./threading/producer-consumer.md)
 - [Testing](./testing/index.md)
 - [Benchmarking](./benchmarking/index.md)
-- [Logging and Tracing](./logging-and-tracing/index.md)
+- [Logging y Tracing](./logging-and-tracing/index.md)
 - [Conditional Compilation](./conditional-compilation/index.md)
 - [Environment and Configuration](./environment-and-configuration/index.md)
 - [LINQ](./linq/index.md)

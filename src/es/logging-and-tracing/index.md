@@ -1,43 +1,45 @@
-# Logging and Tracing
+# Logging y Tracing
 
-.NET supports a number of logging APIs. For most cases, `ILogger` is a good
-default choice, since it works with a variety of built-in and third-party
-logging providers. In C#, a minimal example for structured logging could look
-like:
+.NET admite varias API de logging. Para la mayoría de los casos, `ILogger` es 
+una buena opción predeterminada, ya que funciona con una variedad de proveedores 
+de registro integrados y de terceros. En C#, un ejemplo mínimo para registro 
+estructurado podría lucir así:
 
 ```csharp
 using Microsoft.Extensions.Logging;
 
 using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
 var logger = loggerFactory.CreateLogger<Program>();
-logger.LogInformation("Hello {Day}.", "Thursday"); // Hello Thursday.
+logger.LogInformation("Hola {Day}.", "Jueves"); // Hola Jueves.
 ```
 
-In Rust, a lightweight logging facade is provided by [log][log.rs]. It has less
-features than `ILogger`, e.g. as it does not yet offer (stable) structured
-logging or logging scopes.
+En Rust, se proporciona una fachada de logging ligera a través de [log][log.rs]. 
+Tiene menos características que `ILogger`, por ejemplo, aún no ofrece (de manera 
+estable) registro estructurado o ámbitos de registro.
 
-For something with more feature parity to .NET, Tokio offers
-[`tracing`][tracing.rs]. `tracing` is a framework for instrumenting Rust
-applications to collect structured, event-based diagnostic information.
-[`tracing_subscriber`][tracing-subscriber.rs] can be used to implement and
-compose `tracing` subscribers. The same structured logging example from above
-with `tracing` and `tracing_subscriber` looks like:
+Para algo con una paridad de características más cercana a .NET, Tokio ofrece 
+[`tracing`][tracing.rs]. `tracing` es un framework para instrumentar 
+aplicaciones Rust para recopilar información de diagnóstico estructurada y 
+basada en eventos. [`tracing_subscriber`][tracing-subscriber.rs] se puede 
+utilizar para implementar y componer suscriptores de `tracing`. El mismo ejemplo 
+de registro estructurado anterior con `tracing` y `tracing_subscriber` se vería 
+así:
 
 ```rust
 fn main() {
-    // install global default ("console") collector.
+    // Instalar el recolector global de mensajes de ("consola").
     tracing_subscriber::fmt().init();
-    tracing::info!("Hello {Day}.", Day = "Thursday"); // Hello Thursday.
+    tracing::info!("Hola {Day}.", Day = "Jueves"); // Hola Jueves.
 }
 ```
 
-[OpenTelemetry][opentelemetry.rs] offers a collection of tools, APIs, and SDKs
-used to instrument, generate, collect, and export telemetry data based on the
-OpenTelemetry specification. At the time of writing, the [OpenTelemetry Logging
-API][opentelemetry-logging] is not yet stable and the Rust implementation [does
-not yet support logging][opentelemetry-status.rs], but the tracing API is
-supported.
+[OpenTelemetry][opentelemetry.rs] ofrece una colección de herramientas, APIs y 
+SDKs utilizados para instrumentar, generar, recopilar y exportar datos de 
+telemetría basados en la especificación de OpenTelemetry. En el momento de 
+escribir esto, la [API de registro de OpenTelemetry][opentelemetry-logging] aún 
+no es estable y la implementación de Rust 
+[todavía no soporta el registro][opentelemetry-status.rs], pero sí soporta la 
+API de rastreo.
 
 [opentelemetry.rs]: https://crates.io/crates/opentelemetry
 [tracing-subscriber.rs]: https://docs.rs/tracing-subscriber/latest/tracing_subscriber/
