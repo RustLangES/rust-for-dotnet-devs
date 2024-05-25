@@ -1,9 +1,9 @@
-# Synchronization
+# Sincronización
 
-When data is shared between threads, one needs to synchronize read-write
-access to the data in order to avoid corruption. The C# offers the `lock`
-keyword as a synchronization primitive (which desugars to exception-safe use
-of `Monitor` from .NET):
+Cuando los datos son compartidos entre hilos, es necesario sincronizar el acceso 
+de lectura y escritura a los datos para evitar la corrupción. En C#, se ofrece 
+la palabra clave `lock` como un primitivo de sincronización (que se desenrolla 
+en el uso seguro de excepciones de `Monitor` de .NET):
 
 ```csharp
 using System;
@@ -33,7 +33,8 @@ foreach (var thread in threads)
 Console.WriteLine(data);
 ```
 
-In Rust, one must make explicit use of concurrency structures like `Mutex`:
+En Rust, uno debe hacer uso explícito de estructuras de concurrencia como 
+`Mutex`:
 
 ```rust
 use std::thread;
@@ -62,37 +63,39 @@ fn main() {
 }
 ```
 
-A few things to note:
+Algunas cosas a tener en cuenta:
 
-- Since the ownership of the `Mutex` instance and in turn the data it guards
-  will be shared by multiple threads, it is wrapped in an `Arc` (1). `Arc`
-  provides atomic reference counting, which increments each time it is cloned
-  (2) and decrements each time it is dropped. When the count reaches zero, the
-  mutex and in turn the data it guards are dropped. This is discussed in more
-  detail in [Memory Management]).
+- Dado que la propiedad de la instancia de `Mutex` y, a su vez, los datos que 
+  protege serán compartidos por múltiples hilos, se envuelve en un `Arc` (1). 
+  `Arc` proporciona recuento de referencias atómico, que se incrementa cada vez 
+  que se clona (2) y se decrementa cada vez que se elimina. Cuando el recuento 
+  alcanza cero, se elimina el mutex y, por lo tanto, los datos que protege. Esto 
+  se discute con más detalle en [Gestión de Memoria][Memory Management].
 
-- The closure instance for each thread receives ownership (3) of the _cloned
-  reference_ (2).
+- La closure para cada hilo recibe la propiedad (3) de la 
+  _referencia clonada_ (2).
 
-- The pointer-like code that is `*data += 1` (4), is not some unsafe pointer
-  access even if it looks like it. It's updating the data _wrapped_ in the
-  [mutex guard].
+- El código similar a un puntero, que es `*data += 1` (4), no es un acceso a 
+  puntero inseguro incluso si parece serlo. Está actualizando los datos 
+  _envueltos_ en el [mutex guard].
 
-Unlike the C# version, where one can render it thread-unsafe by commenting out
-the `lock` statement, the Rust version will refuse to compile if it's changed
-in any way (e.g. by commenting out parts) that renders it thread-unsafe. This
-demonstrates that writing thread-safe code is the developer's responsibility
-in C# and .NET by careful use of synchronized structures whereas in Rust, one
-can rely on the compiler.
+A diferencia de la versión de C#, donde se puede volver inseguro para hilos al 
+comentar la declaración `lock`, la versión de Rust se negará a compilar si se 
+cambia de alguna manera (por ejemplo, al comentar partes) que la vuelva insegura 
+para hilos. Esto demuestra que escribir código seguro para hilos es 
+responsabilidad del desarrollador en C# y .NET mediante el uso cuidadoso de 
+estructuras sincronizadas, mientras que en Rust, uno puede confiar en el 
+compilador.
 
-The compiler is able to help because data structures in Rust are marked by
-special _traits_ (see [Interfaces]): `Sync` and `Send`. [`Sync`][sync.rs]
-indicates that references to a type's instances are safe to share between
-threads. [`Send`][send.rs] indicates it's safe to instances of a type across
-thread boundaries. For more information, see the “[Fearless Concurrency]”
-chapter of the Rust book.
+El compilador puede ayudar porque las estructuras de datos en Rust están 
+marcadas por _traits_ especiales (ver [Interfaces]): `Sync` y `Send`. 
+[`Sync`][sync.rs] indica que las referencias a las instancias de un tipo son 
+seguras para compartir entre hilos. [`Send`][send.rs] indica que es seguro 
+enviar instancias de un tipo a través de los límites de los hilos. Para obtener 
+más información, consulta el capítulo 
+"[Concurrencia sin miedo][Fearless Concurrency]" del libro de Rust.
 
-  [Fearless Concurrency]: https://doc.rust-lang.org/book/ch16-00-concurrency.html
+  [Fearless Concurrency]: https://book.rustlang-es.org/ch16-00-concurrency
   [Memory Management]: ../memory-management/index.md
   [mutex guard]: https://doc.rust-lang.org/stable/std/sync/struct.MutexGuard.html
   [sync.rs]: https://doc.rust-lang.org/stable/std/marker/trait.Sync.html

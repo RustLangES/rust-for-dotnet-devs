@@ -33,7 +33,7 @@
 - [Gestión de Memoria](./memory-management/index.md)
 - [Resource Management](./resource-management/index.md)
 - [Threading](./threading/index.md)
-  - [Synchronization](./threading/synchronization.md)
+  - [Sincronización](./threading/synchronization.md)
   - [Producer-Consumer](./threading/producer-consumer.md)
 - [Testing](./testing/index.md)
 - [Benchmarking](./benchmarking/index.md)
