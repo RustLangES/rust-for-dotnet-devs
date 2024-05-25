@@ -1,26 +1,27 @@
 # Benchmarking
 
-Running benchmarks in Rust is done via [`cargo bench`][cargo-bench], a specific
-command for `cargo` which is executing all the methods annotated with the
-`#[bench]` attribute. This attribute is currently [unstable][bench-unstable] and
-available only for the nightly channel.
+La ejecución de benchmarks en Rust se realiza a través de 
+[`cargo bench`][cargo-bench], un comando específico para `cargo` que ejecuta 
+todos los métodos anotados con el atributo `#[bench]`. Este atributo está 
+actualmente [inestable][bench-unstable] y disponible solo para el canal nightly.
 
-.NET users can make use of `BenchmarkDotNet` library to benchmark methods and
-track their performance. The equivalent of `BenchmarkDotNet` is a crate named
-`Criterion`.
+Los usuarios de .NET pueden utilizar la biblioteca `BenchmarkDotNet` para 
+realizar benchmarks de métodos y realizar un seguimiento de su rendimiento. El 
+equivalente de `BenchmarkDotNet` es una crate llamada `Criterion`.
 
-As per its [documentation][criterion-docs], `Criterion` collects and stores
-statistical information from run to run and can automatically detect performance
-regressions as well as measuring optimizations.
+Según su [documentación][criterion-docs], `Criterion` recopila y almacena 
+información estadística de ejecución en ejecución y puede detectar 
+automáticamente regresiones de rendimiento, así como medir optimizaciones.
 
-Using `Criterion` is possible to use the `#[bench]` attribute without moving to
-the nightly channel.
+Usando `Criterion`, es posible utilizar el atributo `#[bench]` sin necesidad de 
+cambiar al canal nightly.
 
-As in `BenchmarkDotNet`, it is also possible to integrate benchmark results with
-the [GitHub Action for Continuous Benchmarking][gh-action-bench]. `Criterion`,
-in fact, supports multiple output formats, amongst which there is also the
-`bencher` format, mimicking the nightly `libtest` benchmarks and compatible with
-the above mentioned action.
+Al igual que en `BenchmarkDotNet`, también es posible integrar los resultados de 
+los benchmarks con la 
+[GitHub Action para Benchmarking Continuo][gh-action-bench]. De hecho, 
+`Criterion` admite múltiples formatos de salida, entre los que también se 
+encuentra el formato `bencher`, que imita los benchmarks nightly de `libtest` y 
+es compatible con la acción mencionada anteriormente.
 
 [cargo-bench]: https://doc.rust-lang.org/cargo/commands/cargo-bench.html
 [bench-unstable]: https://doc.rust-lang.org/rustc/tests/index.html#test-attributes
