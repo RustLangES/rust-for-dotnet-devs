@@ -12,7 +12,7 @@ name = "English"
 name = "Spanish"
 
 [output.html]
-site-url = "https://www.rustlang-es.org/rust-para-dotnet-devs"
+site-url = "https://dotnet-book.rustlang-es.org"
 additional-css = ["ferris.css"]
 additional-js = ["ferris.js"]
 git-repository-url = "https://github.com/RustLangES/rust-para-dotnet-devs"
