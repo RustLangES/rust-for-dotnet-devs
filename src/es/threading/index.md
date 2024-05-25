@@ -1,12 +1,12 @@
 # Threading
 
-The Rust standard library supports threading, synchronisation and concurrency.
-Also the language itself and the standard library do have basic support for the
-concepts, a lot of additional functionality is provided by crates and will not
-be covered in this document.
+La biblioteca estándar de Rust admite hilos, sincronización y concurrencia. 
+Aunque el lenguaje en sí y la biblioteca estándar tienen soporte básico para 
+estos conceptos, gran parte de la funcionalidad adicional es proporcionada por 
+crates y no se cubrirá en este documento.
 
-The following lists approximate mapping of threading types and methods in .NET
-to Rust:
+A continuación se presenta una lista aproximada de la correspondencia entre los 
+tipos y métodos de hilos en .NET y Rust:
 
 | .NET               | Rust                      |
 | ------------------ | ------------------------- |
@@ -27,35 +27,36 @@ to Rust:
 | `Volatile`         | `std::sync::atomic`       |
 | `ThreadLocal`      | `std::thread_local`       |
 
-Launching a thread and waiting for it to finish works the same way in C#/.NET
-and Rust. Below is a simple C# program that creates a thread (where the thread
-prints some text to standard output) and then waits for it to end:
+Lanzar un hilo y esperar a que termine funciona de la misma manera en C#/.NET y 
+Rust. A continuación, se muestra un programa simple en C# que crea un hilo 
+(donde el hilo imprime algún texto en la salida estándar) y luego espera a que 
+termine:
 
 ```csharp
 using System;
 using System.Threading;
 
-var thread = new Thread(() => Console.WriteLine("Hello from a thread!"));
+var thread = new Thread(() => Console.WriteLine("¡Hola, desde un hilo!"));
 thread.Start();
-thread.Join(); // wait for thread to finish
+thread.Join(); // espera a que el hilo termine
 ```
 
-The same code in Rust would be as follows:
+El mismo código en Rust sería el siguiente:
 
 ```rust
 use std::thread;
 
 fn main() {
-    let thread = thread::spawn(|| println!("Hello from a thread!"));
-    thread.join().unwrap(); // wait for thread to finish
+    let thread = thread::spawn(|| println!("¡Hola, desde un hilo!"));
+    thread.join().unwrap(); // espera a que el hilo termine
 }
 ```
 
-Creating and initializing a thread object and starting a thread are two
-different actions in .NET whereas in Rust both happen at the same time with
-`thread::spawn`.
+Crear e inicializar un objeto hilo y comenzar un hilo son dos acciones 
+diferentes en .NET, mientras que en Rust ambas ocurren al mismo tiempo 
+con `thread::spawn`.
 
-In .NET, it's possible to send data as an argument to a thread:
+En .NET, es posible enviar datos como un argumento a un hilo:
 
 ```csharp
 #nullable enable
@@ -67,62 +68,61 @@ using System.Threading;
 var t = new Thread(obj =>
 {
     var data = (StringBuilder)obj!;
-    data.Append(" World!");
+    data.Append(" Mundo!");
 });
 
-var data = new StringBuilder("Hello");
+var data = new StringBuilder("¡Hola");
 t.Start(data);
 t.Join();
 
-Console.WriteLine($"Phrase: {data}");
+Console.WriteLine($"Frase: {data}");
 ```
 
-However, a more modern or terser version would use closures:
+Sin embargo, una versión más moderna o concisa usaría closures:
 
 ```csharp
 using System;
 using System.Text;
 using System.Threading;
 
-var data = new StringBuilder("Hello");
+var data = new StringBuilder("¡Hola");
 
-var t = new Thread(obj => data.Append(" World!"));
+var t = new Thread(obj => data.Append(" Mundo!"));
 
 t.Start();
 t.Join();
 
-Console.WriteLine($"Phrase: {data}");
+Console.WriteLine($"Frase: {data}");
 ```
 
-In Rust, there is no variation of `thread::spawn` that does the same. Instead,
-the data is passed to the thread via a closure:
+En Rust, no hay ninguna variante de `thread::spawn` que haga lo mismo. En su 
+lugar, los datos se pasan al hilo mediante un cierre closure:
 
 ```rust
 use std::thread;
 
 fn main() {
-    let data = String::from("Hello");
+    let data = String::from("¡Hola");
     let handle = thread::spawn(move || {
         let mut data = data;
-        data.push_str(" World!");
+        data.push_str(" Mundo!");
         data
     });
-    println!("Phrase: {}", handle.join().unwrap());
+    println!("Frase: {}", handle.join().unwrap());
 }
 ```
 
-A few things to note:
+Algunas cosas a tener en cuenta:
 
-- The `move` keyword is _required_ to _move_ or pass the ownership of `data`
-  to the closure for the thread. Once this is done, it's no longer legal to
-  continue to use the `data` variable of `main`, in `main`. If that is needed,
-  `data` must be copied or cloned (depending on what the type of the value
-  supports).
+- La palabra clave `move` es _necesaria_ para _mover_ o pasar la propiedad de 
+  `data` al cierre para el hilo. Una vez hecho esto, ya no es legal seguir 
+  utilizando la variable `data` en `main`. Si es necesario, `data` debe ser 
+  copiada o clonada (dependiendo de lo que admita el tipo de valor).
 
-- Rust thread can return values, like tasks in C#, which becomes the return
-  value of the `join` method.
+- Los hilos de Rust pueden devolver valores, como las tareas en C#, lo que se 
+  convierte en el valor de retorno del método `join`.
 
-- It is possible to also pass data to the C# thread via a closure, like the
-  Rust example, but the C# version does not need to worry about ownership
-  since the memory behind the data will be reclaimed by the GC once no one is
-  referencing it anymore.
+- Es posible también pasar datos al hilo de C# mediante una closure, como en el 
+  ejemplo de Rust, pero la versión de C# no necesita preocuparse por el 
+  ownership ya que la memoria detrás de los datos será reclamada por el GC una 
+  vez que nadie la esté referenciando.
