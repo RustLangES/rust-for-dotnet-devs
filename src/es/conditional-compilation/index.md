@@ -1,58 +1,59 @@
-# Conditional Compilation
+# Compilación Condicional
 
-Both .NET and Rust are providing the possibility for compiling specific code
-based on external conditions.
+Tanto .NET como Rust proporcionan la posibilidad de compilar código específico 
+basado en condiciones externas.
 
-In .NET it is possible to use the some [preprocessor directives][preproc-dir] in
-order to control conditional compilation
+En .NET es posible utilizar algunas [directivas del preprocesador][preproc-dir] 
+para controlar la compilación condicional.
 
 ```csharp
 #if debug
     Console.WriteLine("Debug");
 #else
-    Console.WriteLine("Not debug");
+    Console.WriteLine("No debug");
 #endif
 ```
 
-In addition to predefined symbols, it is also possible to use the compiler
-option _[DefineConstants]_ to define symbols that can be used with `#if`,
-`#else`, `#elif` and `#endif` to compile source files conditionally.
+Además de los símbolos predefinidos, también es posible utilizar la opción del 
+compilador _[DefineConstants]_ para definir símbolos que se pueden utilizar con 
+`#if`, `#else`, `#elif` y `#endif` para compilar archivos fuente de forma 
+condicional en .NET.
 
-In Rust it is possible to use the [`cfg attribute`][cfg],
-the [`cfg_attr attribute`][cfg-attr] or the
-[`cfg macro`][cfg-macro] to control conditional compilation
+En Rust, es posible utilizar el [`atributo cfg`][cfg], el 
+[`atributo cfg_attr`][cfg-attr] o el [`macro cfg`][cfg-macro] para controlar la 
+compilación condicional.
 
-As per .NET, in addition to predefined symbols, it is also possible to use the
-[compiler flag `--cfg`][cfg-flag] to arbitrarily set configuration options
+Al igual que en .NET, además de los símbolos predefinidos, también es posible 
+utilizar la [bandera del compilador `--cfg`][cfg-flag] para establecer 
+arbitrariamente opciones de configuración.
 
-The [`cfg attribute`][cfg] is requiring and evaluating a
-`ConfigurationPredicate`
+El [`atributo cfg`][cfg] requiere y evalúa un `ConfigurationPredicate`.
 
 ```rust
 use std::fmt::{Display, Formatter};
 
 struct MyStruct;
 
-// This implementation of Display is only included when the OS is unix but foo is not equal to bar
-// You can compile an executable for this version, on linux, with 'rustc main.rs --cfg foo=\"baz\"'
+// Esta implementación de Display solo se incluye cuando el SO es Unix pero foo no es igual a bar
+// Puedes compilar un ejecutable para esta versión, en Linux, con 'rustc main.rs --cfg foo=\"baz\"'
 #[cfg(all(unix, not(foo = "bar")))]
 impl Display for MyStruct {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str("Running without foo=bar configuration")
+        f.write_str("Ejecutando sin la configuración foo=bar")
     }
 }
 
-// This function is only included when both unix and foo=bar are defined
-// You can compile an executable for this version, on linux, with 'rustc main.rs --cfg foo=\"bar\"'
+// Esta función solo se incluye cuando tanto unix como foo=bar están definidos
+// Puedes compilar un ejecutable para esta versión, en Linux, con 'rustc main.rs --cfg foo=\"bar\"'
 #[cfg(all(unix, foo = "bar"))]
 impl Display for MyStruct {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str("Running with foo=bar configuration")
+        f.write_str("Ejecutando con la configuración foo=bar")
     }
 }
 
-// This function is panicking when not compiled for unix
-// You can compile an executable for this version, on windows, with 'rustc main.rs'
+// Esta función provoca un pánico cuando no se compila para Unix
+// Puedes compilar un ejecutable para esta versión, en Windows, con 'rustc main.rs'
 #[cfg(not(unix))]
 impl Display for MyStruct {
     fn fmt(&self, _f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -65,14 +66,14 @@ fn main() {
 }
 ```
 
-The [`cfg_attr attribute`][cfg-attr] conditionally includes attributes based on
-a configuration predicate.
+El [`atributo cfg_attr`][cfg-attr] incluye condicionalmente atributos basados en 
+un predicado de configuración.
 
 ```rust
 #[cfg_attr(feature = "serialization_support", derive(Serialize, Deserialize))]
 pub struct MaybeSerializableStruct;
 
-// When the `serialization_support` feature flag is enabled, the above will expand to:
+// Cuando la feature flag `serialization_support` está habilitada, lo anterior se expandirá a:
 // #[derive(Serialize, Deserialize)]
 // pub struct MaybeSerializableStruct;
 ```
@@ -81,26 +82,31 @@ The built-in [`cfg macro`][cfg-macro] takes in a single configuration predicate
 and evaluates to the true literal when the predicate is true and the false
 literal when it is false.
 
+El [`macro cfg`][cfg-macro] incorporado toma un solo predicado de configuración 
+y evalúa al literal verdadero cuando el predicado es verdadero y al literal 
+falso cuando es falso.
+
 ```rust
 if cfg!(unix) {
-  println!("I'm running on a unix machine!");
+  println!("¡Estoy ejecutándome en una máquina Unix!");
 }
 ```
 
-See also:
+Mira también:
 
 - [Conditional compilation][conditional-compilation]
 
 ## Features
 
-Conditional compilation is also helpful when there is a need for providing
-optional dependencies. With cargo "features", a package defines a set of named
-features in the `[features]` table of Cargo.toml, and each feature can either be
-enabled or disabled. Features for the package being built can be enabled on the
-command-line with flags such as `--features`. Features for dependencies can be
-enabled in the dependency declaration in Cargo.toml.
+La compilación condicional también es útil cuando es necesario proporcionar 
+dependencias opcionales. Con las "features" de Cargo, un paquete define 
+un conjunto de funcionalidades nombradas en la tabla `[features]` de Cargo.toml, 
+y cada funcionalidad puede estar habilitada o deshabilitada. Las funcionalidades 
+del paquete que se está construyendo pueden habilitarse en la línea de comandos 
+con banderas como `--features`. Las funcionalidades para las dependencias pueden 
+habilitarse en la declaración de dependencia en Cargo.toml.
 
-See also:
+Mira también:
 
 - [Features][features]
 
