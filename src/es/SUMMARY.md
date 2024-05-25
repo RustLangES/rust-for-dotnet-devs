@@ -34,7 +34,7 @@
 - [Resource Management](./resource-management/index.md)
 - [Threading](./threading/index.md)
   - [Sincronización](./threading/synchronization.md)
-  - [Producer-Consumer](./threading/producer-consumer.md)
+  - [Productor-Consumidor](./threading/producer-consumer.md)
 - [Testing](./testing/index.md)
 - [Benchmarking](./benchmarking/index.md)
 - [Logging and Tracing](./logging-and-tracing/index.md)

@@ -1,9 +1,10 @@
-# Producer-Consumer
+# Productor-Consumidor
 
-The producer-consumer pattern is very common to distribute work between
-threads where data is passed from producing threads to consuming threads
-without the need for sharing or locking. .NET has very rich support for this,
-but at the most basic level, `System.Collections.Concurrent` provides the `BlockingCollection` as shown in the next example in C#:
+El patrón productor-consumidor es muy común para distribuir trabajo entre hilos 
+donde los datos son pasados desde hilos productores a hilos consumidores sin 
+necesidad de compartir o bloquear. .NET tiene un soporte muy amplio para esto, 
+pero en el nivel más básico, `System.Collections.Concurrent` proporciona 
+`BlockingCollection` como se muestra en el siguiente ejemplo en C#:
 
 ```csharp
 using System;
@@ -14,13 +15,13 @@ var messages = new BlockingCollection<string>();
 var producer = new Thread(() =>
 {
     for (var n = 1; i < 10; i++)
-        messages.Add($"Message #{n}");
+        messages.Add($"Mensaje #{n}");
     messages.CompleteAdding();
 });
 
 producer.Start();
 
-// main thread is the consumer here
+// el hilo principal es el consumidor aquí
 foreach (var message in messages.GetConsumingEnumerable())
     Console.WriteLine(message);
 
@@ -32,6 +33,11 @@ provides `mpsc::channel`, which is a channel that supports multiple producers
 and a single consumer. A rough translation of the above C# example in Rust
 would look as follows:
 
+Lo mismo se puede hacer en Rust utilizando _canales_. La biblioteca estándar 
+principalmente proporciona `mpsc::channel`, que es un canal que admite múltiples 
+productores y un único consumidor. Una traducción aproximada del ejemplo 
+anterior en C# a Rust se vería así:
+
 ```rust
 use std::thread;
 use std::sync::mpsc;
@@ -42,11 +48,11 @@ fn main() {
 
     let producer = thread::spawn(move || {
         for n in 1..10 {
-            tx.send(format!("Message #{}", n)).unwrap();
+            tx.send(format!("Mensaje #{}", n)).unwrap();
         }
     });
 
-    // main thread is the consumer here
+    // el hilo principal es el consumidor aquí
     for received in rx {
         println!("{}", received);
     }
@@ -55,10 +61,10 @@ fn main() {
 }
 ```
 
-Like channels in Rust, .NET also offers channels in the
-`System.Threading.Channels` namespace, but it is primarily designed to be used
-with tasks and asynchronous programming using `async` and `await`. The
-equivalent of the [async-friendly channels in the Rust space is offered by the
-Tokio runtime][tokio-channels].
+Al igual que los canales en Rust, .NET también ofrece canales en el espacio de 
+nombres `System.Threading.Channels`, pero está diseñado principalmente para ser 
+utilizado con tareas y programación asincrónica mediante el uso de `async` y 
+`await`. El equivalente de los [canales amigables para asincronía en el espacio de 
+Rust es ofrecido por el runtime de Tokio][tokio-channels].
 
   [tokio-channels]: https://tokio.rs/tokio/tutorial/channels
