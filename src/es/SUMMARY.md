@@ -43,5 +43,5 @@
 - [LINQ](./linq/index.md)
 - [Meta Programming](./meta-programming/index.md)
 - [Asynchronous Programming](./asynchronous-programming/index.md)
-- [Project Structure](./project-structure/index.md)
+- [Estructura del Proyecto](./project-structure/index.md)
 - [Compilation and Building](./compilation-and-building/index.md)
