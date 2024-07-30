@@ -1,43 +1,43 @@
-# Environment and Configuration
+# Entorno y Configuración
 
-## Accessing environment variables
+## Accediendo a variables de entorno
 
-.NET provides access to environment variables via the
-`System.Environment.GetEnvironmentVariable` method. This method retrieves the
-value of an environment variable at runtime.
+.NET proporciona acceso a las variables de entorno a través del método 
+`System.Environment.GetEnvironmentVariable`. Este método recupera el valor de 
+una variable de entorno en tiempo de ejecución.
 
 ```csharp
 using System;
 
-const string name = "EXAMPLE_VARIABLE";
+const string name = "VARIABLE_EJEMPLO";
 
 var value = Environment.GetEnvironmentVariable(name);
 if (string.IsNullOrEmpty(value))
-    Console.WriteLine($"Variable '{name}' not set.");
+    Console.WriteLine($"Variable '{name}' no esta configurada.");
 else
-    Console.WriteLine($"Variable '{name}' set to '{value}'.");
+    Console.WriteLine($"Variable '{name}' configurada con '{value}'.");
 ```
 
-Rust is providing the same functionality of accessing an environment variable at
-runtime via the `var` and `var_os` functions from the `std::env` module.
+Rust proporciona la misma funcionalidad de acceso a una variable de entorno en 
+tiempo de ejecución mediante las funciones `var` y `var_os` del módulo `std::env`.
 
-`var` function is returning a `Result<String, VarError>`, either returning the
-variable if set or returning an error if the variable is not set or it is not
-valid Unicode.
+La función `var` devuelve un `Result<String, VarError>`, devolviendo la variable
+si está configurada o devolviendo un error si la variable no está configurada o 
+no es Unicode válido.
 
-`var_os` has a different signature giving back an `Option<OsString>`, either
-returning some value if the variable is set, or returning None if the variable
-is not set. An `OsString` is not required to be valid Unicode.
+`var_os` tiene una firma diferente, devolviendo una `Option<OsString>`, 
+devolviendo algún valor si la variable está configurada o devolviendo None si la 
+variable no está configurada. Un `OsString` no tiene que ser Unicode válido.
 
 ```rust
 use std::env;
 
 
 fn main() {
-    let key = "ExampleVariable";
+    let key = "VariableEjemplo";
     match env::var(key) {
         Ok(val) => println!("{key}: {val:?}"),
-        Err(e) => println!("couldn't interpret {key}: {e}"),
+        Err(e) => println!("No se pudo interpretar {key}: {e}"),
     }
 }
 ```
@@ -46,42 +46,43 @@ fn main() {
 use std::env;
 
 fn main() {
-    let key = "ExampleVariable";
+    let key = "VariableEjemplo";
     match env::var_os(key) {
         Some(val) => println!("{key}: {val:?}"),
-        None => println!("{key} not defined in the enviroment"),
+        None => println!("{key} no definida en el entorno"),
     }
 }
 ```
 
-Rust is also providing the functionality of accessing an environment variable at
-compile time. The `env!` macro from `std::env` expands the value of the variable
-at compile time, returning a `&'static str`. If the variable is not set, an
-error is emitted.
+Rust también proporciona la funcionalidad de acceder a una variable de entorno 
+en tiempo de compilación. El macro `env!` del módulo `std::env` expande el valor 
+de la variable en tiempo de compilación, devolviendo un `&'static str`. Si la 
+variable no está establecida, se emite un error.
 
 ```rust
 use std::env;
 
 fn main() {
-    let example = env!("ExampleVariable");
+    let example = env!("VariableEjemplo");
     println!("{example}");
 }
 ```
 
-In .NET a compile time access to environment variables can be achieved, in a
-less straightforward way, via [source generators][source-gen].
+En .NET, el acceso a variables de entorno en tiempo de compilación se puede 
+lograr, de una manera menos directa, a través de 
+[generadores de código fuente][source-gen].
 
-[source-gen]: https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview
+[source-gen]: https://learn.microsoft.com/es-ES/dotnet/csharp/roslyn-sdk/source-generators-overview
 
-## Configuration
+## Configuración
 
-Configuration in .NET is possible with configuration providers. The framework is
-providing several provider implementations via
-`Microsoft.Extensions.Configuration` namespace and NuGet packages.
+La configuración en .NET es posible mediante proveedores de configuración. El 
+framework proporciona varias implementaciones de proveedores a través del 
+espacio de nombres `Microsoft.Extensions.Configuration` y paquetes NuGet.
 
-Configuration providers read configuration data from key-value pairs using
-different sources and provide a unified view of the configuration via the
-`IConfiguration` type.
+Los proveedores de configuración leen datos de configuración a partir de pares 
+clave-valor utilizando diferentes fuentes y proporcionan una vista unificada de 
+la configuración a través del tipo `IConfiguration`.
 
 ```csharp
 using Microsoft.Extensions.Configuration;
@@ -93,20 +94,20 @@ class Example {
             .AddEnvironmentVariables()
             .Build();
 
-        var example = configuration.GetValue<string>("ExampleVar");
+        var example = configuration.GetValue<string>("VariableEjemplo");
 
         Console.WriteLine(example);
     }
 }
 ```
 
-Other providers examples can be found in the official documentation
-[Configurations provider in .NET][conf-net].
+Otros ejemplos de proveedores se pueden encontrar en la documentación oficial 
+[Proveedores de configuración en .NET][conf-net].
 
-A similar configuration experience in Rust is available via use of third-party
-crates such as [figment] or [config].
+Una experiencia de configuración similar en Rust está disponible mediante el uso 
+de crates de terceros como [figment] o [config].
 
-See the following example making use of [config] crate:
+Vea el siguiente ejemplo utilizando el crate [config]:
 
 ```rust
 use config::{Config, Environment};
@@ -116,19 +117,19 @@ fn main() {
 
     match builder.build() {
         Ok(config) => {
-            match config.get_string("examplevar") {
+            match config.get_string("variable_ejemplo") {
                 Ok(v) => println!("{v}"),
                 Err(e) => println!("{e}")
             }
         },
         Err(_) => {
-            // something went wrong
+            // algo salio mal
         }
     }
 }
 
 ```
 
-[conf-net]: https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration-providers
+[conf-net]: https://learn.microsoft.com/es-ES/dotnet/core/extensions/configuration-providers
 [figment]: https://crates.io/crates/figment
 [config]: https://crates.io/crates/config

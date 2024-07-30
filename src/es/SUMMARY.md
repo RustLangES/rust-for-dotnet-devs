@@ -39,7 +39,7 @@
 - [Benchmarking](./benchmarking/index.md)
 - [Logging y Tracing](./logging-and-tracing/index.md)
 - [Compilación Condicional](./conditional-compilation/index.md)
-- [Environment and Configuration](./environment-and-configuration/index.md)
+- [Entorno y Configuración](./environment-and-configuration/index.md)
 - [LINQ](./linq/index.md)
 - [Meta Programming](./meta-programming/index.md)
 - [Asynchronous Programming](./asynchronous-programming/index.md)
