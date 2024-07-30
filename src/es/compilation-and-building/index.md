@@ -1,53 +1,57 @@
-# Compilation and Building
+# Compilación y Building
 
-## .NET CLI
+## CLI de .NET
 
-The equivalent of the .NET CLI (`dotnet`) in Rust is [Cargo] (`cargo`). Both
-tools are entry-point wrappers that simplify use of other low-level tools. For
-example, although you could invoke the C# compiler directly (`csc`) or MSBuild
-via `dotnet msbuild`, developers tend to use `dotnet build` to build their
-solution. Similarly in Rust, while you could use the Rust compiler (`rustc`)
-directly, using `cargo build` is generally far simpler.
+El equivalente de la CLI de .NET (`dotnet`) en Rust es [Cargo] (`cargo`). Ambas 
+herramientas son envoltorios de puntos de entrada que simplifican el uso de 
+otras herramientas de bajo nivel. Por ejemplo, aunque podrías invocar el 
+compilador de C# directamente (`csc`) o MSBuild a través de `dotnet msbuild`, 
+los desarrolladores tienden a usar `dotnet build` para construir su solución. De 
+manera similar en Rust, aunque podrías usar el compilador de Rust (`rustc`) 
+directamente, usar `cargo build` es generalmente mucho más simple.
 
 [cargo]: https://doc.rust-lang.org/cargo/
 
 ## Building
 
-Building an executable in .NET using [`dotnet build`][net-build-output]
-restores pacakges, compiles the project sources into an [assembly]. The
-assembly contain the code in Intermediate Language (IL) and can _typically_ be
-run on any platform supported by .NET and provided the .NET runtime is
-installed on the host. The assemblies coming from dependent packages are
-generally co-located with the project's output assembly. [`cargo
-build`][cargo-build] in Rust does the same, except the Rust compiler
-statically links (although there exist other [linking options][linkage]) all
-code into a single, platform-dependent, binary.
+Construir un ejecutable en .NET usando [`dotnet build`][net-build-output] 
+restaura los paquetes, compila las fuentes del proyecto en un [ensamblado]. El 
+ensamblado contiene el código en Lenguaje Intermedio (IL) y _típicamente_ se 
+puede ejecutar en cualquier plataforma compatible con .NET, siempre que el 
+runtime de .NET esté instalado en el host. Los ensamblados provenientes de 
+paquetes dependientes generalmente se ubican junto con el ensamblado de salida 
+del proyecto. [`cargo build`][cargo-build] en Rust hace lo mismo, excepto que el 
+compilador de Rust enlaza estáticamente (aunque existen otras 
+[opciones de enlace][linkage]) todo el código en un solo binario dependiente de 
+la plataforma.
 
-Developers use `dotnet publish` to prepare a .NET executable for distribution,
-either as a _framework-dependent deployment_ (FDD) or _self-contained
-deployment_ (SCD). In Rust, there is no equivalent to `dotnet publish` as the
-build output already contains a single, platform-dependent binary for each
-target.
+Los desarrolladores usan `dotnet publish` para preparar un ejecutable de .NET 
+para distribución, ya sea como un _despliegue dependiente del framework_ (FDD) o 
+un _despliegue autónomo_ (SCD). En Rust, no hay un equivalente a `dotnet publish` 
+ya que la salida de la construcción ya contiene un único binario dependiente de 
+la plataforma para cada objetivo.
 
-When building a library in .NET using [`dotnet build`][net-build-output], it
-will still generate an [assembly] containing the IL. In Rust, the build output
-is, again, a platform-dependent, compiled library for each library target.
+Al construir una biblioteca en .NET usando [`dotnet build`][net-build-output], 
+aún generará un [ensamblado][assembly] que contiene el IL. En Rust, la salida de 
+la construcción es, nuevamente, una biblioteca compilada dependiente de la 
+plataforma para cada objetivo de biblioteca.
 
-See also:
+Ver también:
 
-- [Crate]
+- [Paquetes y Crates][Crate]
 
-[net-build-output]: https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-build#description
-[assembly]: https://learn.microsoft.com/en-us/dotnet/standard/assembly/
+[net-build-output]: https://learn.microsoft.com/es-ES/dotnet/core/tools/dotnet-build#description
+[assembly]: https://learn.microsoft.com/es-ES/dotnet/standard/assembly/
 [cargo-build]: https://doc.rust-lang.org/cargo/commands/cargo-build.html#cargo-build1
 [linkage]: https://doc.rust-lang.org/reference/linkage.html
-[crate]: https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html
+[crate]: https://book.rustlang-es.org/ch07-01-packages-and-crates.html
 
-## Dependencies
+## Dependencias
 
-In .NET, the contents of a project file define the build options and
-dependencies. In Rust, when using Cargo, a `Cargo.toml` declares the
-dependencies for a package. A typical project file will look like:
+En .NET, el contenido de un archivo de proyecto define las opciones de 
+compilación y las dependencias. En Rust, al usar Cargo, un archivo `Cargo.toml` 
+declara las dependencias de un paquete. Un archivo de proyecto típico se verá 
+como:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -64,7 +68,7 @@ dependencies for a package. A typical project file will look like:
 </Project>
 ```
 
-The equivalent `Cargo.toml` in Rust is defined as:
+El equivalente de `Cargo.toml` en Rust se define como:
 
 ```toml
 [package]
@@ -75,46 +79,49 @@ version = "0.1.0"
 tokio = "1.0.0"
 ```
 
-Cargo follows a convention that `src/main.rs` is the crate root of a binary
-crate with the same name as the package. Likewise, Cargo knows that if the
-package directory contains `src/lib.rs`, the package contains a library crate
-with the same name as the package.
+Cargo sigue una convención en la que `src/main.rs` es la raíz del crate binario 
+con el mismo nombre que el paquete. Del mismo modo, Cargo sabe que si el 
+directorio del paquete contiene `src/lib.rs`, el paquete contiene un crate de 
+biblioteca con el mismo nombre que el paquete.
 
-## Packages
+## Paquetes
 
-NuGet is most commonly used to install packages, and various tools supported it.
-For example, adding a NuGet package reference with the .NET CLI will add the
-dependency to the project file:
+NuGet se utiliza comúnmente para instalar paquetes, y varias herramientas lo 
+soportan. Por ejemplo, añadir una referencia a un paquete NuGet con la CLI de 
+.NET añadirá la dependencia al archivo del proyecto:
 
-  dotnet add package morelinq
+> dotnet add package morelinq
 
-In Rust this works almost the same if using Cargo to add packages.
+En Rust, esto funciona de manera casi igual si se usa Cargo para agregar paquetes.
 
-  cargo add tokio
+> cargo add tokio
 
-The most common package registry for .NET is [nuget.org] whereas Rust packages
-are usually shared via [crates.io].
+El registro de paquetes más común para .NET es [nuget.org], mientras que los 
+paquetes de Rust se comparten generalmente a través de [crates.io].
 
 [nuget.org]: https://www.nuget.org/
 [crates.io]: https://crates.io
 
-## Static code analysis
+## Análisis estático de código
 
-Since .NET 5, the Roslyn analyzers come bundled with the .NET SDK and provide
-code quality as well as code-style analysis. The equivalent linting tool in Rust
-is [Clippy].
+Desde .NET 5, los analizadores de Roslyn vienen incluidos con el SDK de .NET y 
+proporcionan análisis de calidad de código y estilo de código. La herramienta de 
+linting equivalente en Rust es [Clippy].
 
-Similarly to .NET, where the build fails if warnings are present by setting
-[`TreatWarningsAsErrors`][treat-warnings-as-errors] to `true`, Clippy can fail
-if the compiler or Clippy emits warnings (`cargo clippy -- -D warnings`).
+De manera similar a .NET, donde la compilación falla si hay advertencias al 
+configurar [`TreatWarningsAsErrors`][treat-warnings-as-errors] en `true`, Clippy 
+puede fallar si el compilador o Clippy emiten advertencias 
+(`cargo clippy -- -D warnings`).
 
-There are further static checks to consider adding to a Rust CI pipeline:
+Hay otras verificaciones estáticas que considerar agregar a una pipeline de CI 
+en Rust:
 
-- Run [`cargo doc`][cargo-doc] to ensure that documentation is correct.
-- Run [`cargo check --locked`][cargo-check] to enforce that the `Cargo.lock`
-  file is up-to-date.
+- Ejecutar [`cargo doc`][cargo-doc] para asegurar que la documentación es 
+  correcta.
+- Ejecutar [`cargo check --locked`][cargo-check] para asegurar que el archivo 
+  `Cargo.lock` está actualizado.
 
 [clippy]: https://github.com/rust-lang/rust-clippy
-[treat-warnings-as-errors]: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings
+[treat-warnings-as-errors]: https://learn.microsoft.com/es-ES/dotnet/csharp/language-reference/compiler-options/errors-warnings
 [cargo-doc]: https://doc.rust-lang.org/cargo/commands/cargo-doc.html
 [cargo-check]: https://doc.rust-lang.org/cargo/commands/cargo-check.html#manifest-options
