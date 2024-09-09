@@ -46,4 +46,4 @@ información, consulta la sección
 "[Moviendo valores capturados fuera de los closures y los traits Fn][closure-move]" de 
 "El Lenguaje de Programación Rust".
 
-  [closure-move]: https://rustlanges.github.io/rust-book-es/ch13-01-closures.html?highlight=moviend#moviendo-valores-capturados-fuera-de-los-closures-y-los-traits-fn
+  [closure-move]: https://book.rustlang-es.org/ch13-01-closures?highlight=moviend#moviendo-valores-capturados-fuera-de-los-closures-y-los-traits-fn

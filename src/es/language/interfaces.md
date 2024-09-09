@@ -44,6 +44,6 @@ Puedes mirar también:
 - [Downcast Trait Object]
 - [Downcasting in Rust]
 
-    [traits]: https://rustlanges.github.io/rust-book-es/ch10-02-traits.html
+    [traits]: https://book.rustlang-es.org/ch10-02-traits
     [Downcast Trait Object]: https://bennett.dev/rust/downcast-trait-object/
     [Downcasting in Rust]: https://ysantos.com/blog/downcast-rust

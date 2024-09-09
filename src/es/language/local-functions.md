@@ -9,4 +9,4 @@ También puedes ver:
 
 - [Closures: Funciones anónimas que capturan su entorno - El Lenguaje de Programación Rust]
 
-    [Closures: Funciones anónimas que capturan su entorno - El Lenguaje de Programación Rust]: https://rustlanges.github.io/rust-book-es/ch13-01-closures.html?highlight=closure#closures-funciones-anónimas-que-capturan-su-entorno
+    [Closures: Funciones anónimas que capturan su entorno - El Lenguaje de Programación Rust]: https://book.rustlang-es.org/ch13-01-closures?highlight=closure#closures-funciones-anónimas-que-capturan-su-entorno

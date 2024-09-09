@@ -27,7 +27,7 @@ mutables cuando se los declara como tal. por ejemplo
 Hay también diferencias en usar strings debido al concepto del ownership. Para
 leer más acerca del ownership con el tipo String, mira [el libro de Rust][ownership-string-type-example].
 
-[ownership-string-type-example]: https://rustlanges.github.io/rust-book-es/ch04-01-what-is-ownership.html#el-tipo-string
+[ownership-string-type-example]: https://book.rustlang-es.org/ch04-01-what-is-ownership#el-tipo-string
 
 Notas
 

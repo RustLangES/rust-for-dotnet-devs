@@ -52,7 +52,7 @@ Dado que Rust no tiene clases y, en consecuencia, jerarquías de tipos basadas e
 la subclase, el comportamiento compartido se logra mediante traits y genéricos, 
 y el polimorfismo a través de la despacho virtual utilizando [trait objects].
 
-  [trait objects]: https://rustlanges.github.io/rust-book-es/ch17-02-trait-objects.html
+  [trait objects]: https://book.rustlang-es.org/ch17-02-trait-objects
 
 Considera la siguiente `struct` que representa un rectángulo en C#:
 

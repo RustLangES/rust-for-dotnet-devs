@@ -69,5 +69,5 @@ _ = match ("first", "second")
 ```
 
 [net-discards]: https://learn.microsoft.com/es-es/dotnet/csharp/fundamentals/functional/discards
-[rust-ignoring-values]: https://rustlanges.github.io/rust-book-es/ch18-03-pattern-syntax.html?highlight=ignorando%20valore#ignorando-valores-en-un-pattern
+[rust-ignoring-values]: https://book.rustlang-es.org/ch18-03-pattern-syntax?highlight=ignorando%20valore#ignorando-valores-en-un-pattern
 [rust-destructuring]: https://doc.rust-lang.org/reference/patterns.html#destructuring

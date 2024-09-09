@@ -7,4 +7,4 @@ _herencia de interfaces_ en C#, Rust permite definir relaciones entre traits
 mediante el uso de [_supertraits_][supertrait.rs].
 
 [Estructuras]: ./custom-types/structs.md
-[supertrait.rs]: https://rustlanges.github.io/rust-book-es/ch19-03-advanced-traits.html?highlight=supertrai#usando-supertraits-para-requerir-la-funcionalidad-de-un-trait-dentro-de-otro-trait
+[supertrait.rs]: https://book.rustlang-es.org/ch19-03-advanced-traits?highlight=supertrai#usando-supertraits-para-requerir-la-funcionalidad-de-un-trait-dentro-de-otro-trait

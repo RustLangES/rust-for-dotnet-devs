@@ -23,8 +23,8 @@ Para realizar una instalación local completa del compilador Rust y sus herramie
   [Playground de Rust]: https://play.rust-lang.org/
   [GitHub Codespaces]: https://github.com/features/codespaces
   [vscode-dev-containers]: https://code.visualstudio.com/docs/devcontainers/containers
-  [rs-book]: https://rustlanges.github.io/rust-book-es/title-page.html
-  [Instalación]: https://rustlanges.github.io/rust-book-es/ch01-01-installation.html
-  [Empezando]: https://rustlanges.github.io/rust-book-es/ch01-00-getting-started.html
+  [rs-book]: https://book.rustlang-es.org/title-page
+  [Instalación]: https://book.rustlang-es.org/ch01-01-installation
+  [Empezando]: https://book.rustlang-es.org/ch01-00-getting-started
   [la página de instalación]: https://www.rust-lang.org/tools/install
   [rust-lang.org]: https://www.rust-lang.org/
