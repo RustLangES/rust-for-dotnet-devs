@@ -28,11 +28,6 @@ foreach (var message in messages.GetConsumingEnumerable())
 producer.Join();
 ```
 
-The same can be done in Rust using _channels_. The standard library primarily
-provides `mpsc::channel`, which is a channel that supports multiple producers
-and a single consumer. A rough translation of the above C# example in Rust
-would look as follows:
-
 Lo mismo se puede hacer en Rust utilizando _canales_. La biblioteca estándar 
 principalmente proporciona `mpsc::channel`, que es un canal que admite múltiples 
 productores y un único consumidor. Una traducción aproximada del ejemplo 
