@@ -1,24 +1,14 @@
-# Meta Programming
+# Meta Programación
 
-Metaprogramming can be seen as a way of writing code that writes/generates other
-code.
+La metaprogramación puede verse como una forma de escribir código que genera o escribe otro código.
 
-Roslyn is providing a feature for metaprogramming in C#, available since .NET 5,
-and called [`Source Generators`][source-gen]. Source generators can create new
-C# source files at build-time that are added to the user's compilation. Before
-`Source Generators` were introduced, Visual Studio has been providing a code
-generation tool via [`T4 Text Templates`][T4]. An example on how T4 works is the
-following [template] or its [concretization].
+Roslyn proporciona una funcionalidad para la metaprogramación en C#, disponible desde .NET 5, llamada [`Generadores de Código`][source-gen]. Los generadores de código pueden crear nuevos archivos fuente de C# en tiempo de compilación, que se agregan a la compilación del usuario. Antes de que se introdujeran los `Generadores de Código`, Visual Studio proporcionaba una herramienta de generación de código a través de las [`Plantillas de Texto T4`][T4]. Un ejemplo de cómo funciona T4 es la siguiente [plantilla] o su [concretización].
 
-Rust is also providing a feature for metaprogramming: [macros]. There are
-`declarative macros` and `procedural macros`.
+Rust también proporciona una funcionalidad para la metaprogramación: [macros]. Existen `macros declarativas` y `macros procedimentales`.
 
-Declarative macros allow you to write control structures that take an
-expression, compare the resulting value of the expression to patterns, and then
-run the code associated with the matching pattern.
+Las macros declarativas permiten escribir estructuras de control que toman una expresión, comparan el valor resultante de la expresión con patrones, y luego ejecutan el código asociado con el patrón coincidente.
 
-The following example is the definition of the `println!` macro that it is
-possible to call for printing some text `println!("Some text")`
+El siguiente ejemplo es la definición de la macro `println!`, que es posible llamar para imprimir un texto `println!("Algún texto")`.
 
 ```rust
 macro_rules! println {
@@ -31,26 +21,21 @@ macro_rules! println {
 }
 ```
 
-To learn more about writing declarative macros, refer to the Rust reference
-chapter [macros by example] or [The Little Book of Rust Macros].
+Para aprender más sobre la escritura de macros declarativas, consulta el capítulo de la referencia de Rust sobre [macros por ejemplo] o [El pequeño libro de macros de Rust].
 
-[Procedural macros] are different than declarative macros. Those accept some code
-as an input, operate on that code, and produce some code as an output.
+Las [macros procedimentales] son diferentes de las macros declarativas. Estas aceptan un código como entrada, operan sobre ese código y producen un código como salida.
 
-Another technique used in C# for metaprogramming is reflection. Rust does not
-support reflection.
+Otra técnica usada en C# para la metaprogramación es la reflexión. Rust no soporta reflexión.
 
 [source-gen]: https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview
 
-## Function-like macros
+## Macros con forma de función
 
-Function-like macros are in the following form: `function!(...)`
+Las macros con forma de función tienen la siguiente forma: `function!(...)`
 
-The following code snippet defines a function-like macro named
-`print_something`, which is generating a `print_it` method for printing the
-"Something" string.
+El siguiente fragmento de código define una macro con forma de función llamada `print_something`, que genera un método `print_it` para imprimir la cadena "Something".
 
-In the lib.rs:
+En el archivo lib.rs:
 
 ```rust
 extern crate proc_macro;
@@ -62,7 +47,7 @@ pub fn print_something(_item: TokenStream) -> TokenStream {
 }
 ```
 
-In the main.rs:
+En el archivo main.rs:
 
 ```rust
 use replace_crate_name_here::print_something;
@@ -73,41 +58,33 @@ fn main() {
 }
 ```
 
-## Derive macros
+## Macros de tipo derive
 
-Derive macros can create new items given the token stream of a struct, enum, or
-union. An example of a derive macro is the `#[derive(Clone)]` one, which is
-generating the needed code for making the input struct/enum/union implement the
-`Clone` trait.
+Las macros de tipo derive pueden crear nuevos elementos dados el flujo de tokens de una estructura, enumeración o unión. Un ejemplo de una macro derive es `#[derive(Clone)]`, que genera el código necesario para que la estructura/enumeración/unión de entrada implemente el rasgo `Clone`.
 
-In order to understand how to define a custom derive macro, it is possible to
-read the rust reference for [derive macros]
+Para entender cómo definir una macro derive personalizada, es posible leer la referencia de Rust sobre [macros derive].
 
-[derive macros]: https://doc.rust-lang.org/reference/procedural-macros.html#derive-macros
+[macros derive]: https://doc.rust-lang.org/reference/procedural-macros.html#derive-macros
 
-## Attribute macros
+## Macros de atributo
 
-Attribute macros define new attributes which can be attached to rust items.
-While working with asynchronous code, if making use of Tokio, the first step
-will be to decorate the new asynchronous main with an attribute macro like the
-following example:
+Las macros de atributo definen nuevos atributos que pueden ser adjuntados a elementos de Rust. Al trabajar con código asincrónico, si se utiliza Tokio, el primer paso será decorar el nuevo `main` asincrónico con una macro de atributo como el siguiente ejemplo:
 
 ```rust
 #[tokio::main]
 async fn main() {
-    println!("Hello world");
+    println!("Hola mundo");
 }
 ```
 
-In order to understand how to define a custom derive macro, it is possible to
-read the rust reference for [attribute macros]
+Para entender cómo definir una macro de atributo personalizada, es posible leer la referencia de Rust sobre [macros de atributo].
 
-[attribute macros]: https://doc.rust-lang.org/reference/procedural-macros.html#attribute-macros
+[macros de atributo]: https://doc.rust-lang.org/reference/procedural-macros.html#attribute-macros
 
-[T4]: https://learn.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/modeling/code-generation-and-t4-text-templates?view=vs-2015&redirectedfrom=MSDN
-[template]: https://github.com/atifaziz/Jacob/blob/master/src/JsonReader.g.tt
-[concretization]: https://github.com/atifaziz/Jacob/blob/master/src/JsonReader.g.cs
-[macros]: https://doc.rust-lang.org/book/ch19-06-macros.html
-[macros by example]: https://doc.rust-lang.org/reference/macros-by-example.html
-[procedural macros]: https://doc.rust-lang.org/reference/procedural-macros.html
-[The Little Book of Rust Macros]: https://veykril.github.io/tlborm/
+[T4]: https://learn.microsoft.com/es-es/previous-versions/visualstudio/visual-studio-2015/modeling/code-generation-and-t4-text-templates?view=vs-2015&redirectedfrom=MSDN  
+[plantilla]: https://github.com/atifaziz/Jacob/blob/master/src/JsonReader.g.tt  
+[concretización]: https://github.com/atifaziz/Jacob/blob/master/src/JsonReader.g.cs  
+[macros]: https://doc.rust-lang.org/book/ch19-06-macros.html  
+[macros por ejemplo]: https://doc.rust-lang.org/reference/macros-by-example.html  
+[macros procedimentales]: https://doc.rust-lang.org/reference/procedural-macros.html  
+[El pequeño libro de macros de Rust]: https://veykril.github.io/tlborm/
